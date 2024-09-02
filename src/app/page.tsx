@@ -1,11 +1,14 @@
 
-
 import { env } from "@/lib/env";
+
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { HeadingOne } from "@/components/Typography";
+import UsersListing from "@/services/Users/listing";
 
 
-export default function Home() {
+
+export default async function Home() {
     const { APP_NAME } = env;
 
     const breadcrumbs = [
@@ -19,11 +22,17 @@ export default function Home() {
         },
     ];
 
+
+
     return (
         <main>
 
             <HeadingOne text="Dashboard" />
             <Breadcrumbs crumbs={ breadcrumbs } />
+
+            <div className="py-10">
+                <UsersListing />
+            </div>
 
             {
                 // create an array of 10 items
