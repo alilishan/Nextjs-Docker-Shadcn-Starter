@@ -5,9 +5,6 @@ const UserService = {
 
     async getUsers(data: { limit: number, skip: number, key?: string, value?: string }) {
 
-        console.log('data', data);
-
-
         const params = new URLSearchParams({
             limit: data.limit.toString(),
             skip: data.skip.toString(),

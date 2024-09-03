@@ -1,13 +1,16 @@
 "use client"
 
+import { useState } from "react"
+
 import {
     ColumnDef,
+    SortingState,
     flexRender,
     getCoreRowModel,
     getSortedRowModel,
-    SortingState,
     useReactTable,
 } from "@tanstack/react-table"
+
 
 import {
     Table,
@@ -17,7 +20,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { useState } from "react"
 
 
 
@@ -32,7 +34,9 @@ export function DataTable<TData, TValue>({
     data,
 }: DataTableProps<TData, TValue>) {
 
+    // Sorting
     const [sorting, setSorting] = useState<SortingState>([])
+
 
     const table = useReactTable({
         data,

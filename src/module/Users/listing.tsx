@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useReducer } from "react";
+import React, { FC, useReducer, useState } from "react";
 import useSWR from "swr";
 
 import { fetcher } from "@/services/SWR";
@@ -9,6 +9,8 @@ import { columns } from "./columns";
 import LoadingSpinner from "@/components/Spinner";
 import Pagination from "@/components/Pagination";
 import SelectBox from "@/components/SelectBox";
+import DataTableToolBar from "@/components/DataTable/ToolBar";
+
 
 interface Props {
     identifiers?: string;
@@ -16,6 +18,7 @@ interface Props {
 
 const UsersListing:FC<Props> = () => {
 
+    // State management
     const [state, setState] = useReducer((state: any, newState: any) => ({
         ...state,
         ...newState
@@ -25,10 +28,13 @@ const UsersListing:FC<Props> = () => {
         page: 1,
         total: 0,
         filterHairColor: "ALL",
+        columns: columns.filter((column) => column.show),
     });
+
 
     // Calculate the skip value
     const getSkip = () => (state.page - 1) * state.perPage;
+
 
     // Get the filter values
     const getFilterValues = () => {
@@ -36,6 +42,7 @@ const UsersListing:FC<Props> = () => {
             ...(state.filterHairColor !== "ALL" && { key: 'hair.color', value: state.filterHairColor }),
         };
     }
+
 
     // Fetch the data
     const { data, isLoading, mutate } = useSWR([
@@ -51,6 +58,7 @@ const UsersListing:FC<Props> = () => {
         keepPreviousData: true,
     });
 
+
     if (isLoading) {
         return <div>
             <LoadingSpinner />
@@ -60,23 +68,27 @@ const UsersListing:FC<Props> = () => {
     return (
         <div>
             {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-            <div className="pb-3 flex w-full items-center gap-1">
-                <p className="text-xs">Filter Hair Color:</p>
-                <SelectBox
-                    placeholder="Choose Hair Color"
-                    value={state.filterHairColor}
-                    options={[
-                        { key: "ALL", value: "All" },
-                        { key: "Black", value: "Black" },
-                        { key: "Brown", value: "Brown" },
-                    ]}
-                    onChange={(value) => setState({ filterHairColor: value })}
-                />
-
-            </div>
+            <DataTableToolBar
+                columns={columns}
+                onShowColumnsChange={(columns) => setState({ columns })}
+            >
+                <>
+                    <p className="text-xs">Filter Hair Color:</p>
+                    <SelectBox
+                        placeholder="Choose Hair Color"
+                        value={state.filterHairColor}
+                        options={[
+                            { key: "ALL", value: "All" },
+                            { key: "Black", value: "Black" },
+                            { key: "Brown", value: "Brown" },
+                        ]}
+                        onChange={(value) => setState({ filterHairColor: value })}
+                    />
+                </>
+            </DataTableToolBar>
 
             <DataTable
-                columns={columns}
+                columns={state.columns}
                 data={data.users}
             />
 

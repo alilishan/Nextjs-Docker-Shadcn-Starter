@@ -18,24 +18,37 @@ import {
 import { User } from "./type"
 import { IoIosMore } from "react-icons/io";
 import { ArrowUpDown } from "lucide-react";
+import { ExtendedColumnDef } from "@/components/DataTable/types";
 
 
-export const columns: ColumnDef<User>[] = [
+
+export const columns: ExtendedColumnDef<User, any>[] = [
     {
+        id: "firstName",
         accessorKey: "firstName",
         header: "First Name",
+        label: "First Name",
+        show: true,
     },
     {
+        id: "lastName",
         accessorKey: "lastName",
         header: "Last Name",
+        label: "Last Name",
+        show: true,
     },
     {
+        id: "status",
         accessorKey: "status",
         header: "Status",
+        label: "Status",
+        show: true,
     },
 
     {
+        id: "age",
         accessorKey: "age",
+        label: "Age",
         header: ({ column }) => {
             return (
                 <div className="text-center">
@@ -50,10 +63,13 @@ export const columns: ColumnDef<User>[] = [
             )
         },
         cell: ({ row }) => <div className="text-center">{row.getValue("age")}</div>,
+        show: true,
     },
 
     {
         id: "hair",
+        header: "Hair",
+        label: "Hair",
         cell: ({ row }) => {
             const user = row.original
 
@@ -62,11 +78,14 @@ export const columns: ColumnDef<User>[] = [
                     <span>{user.hair.color} {user.hair.type}</span>
                 </div>
             )
-        }
+        },
+        show: true,
     },
 
     {
         id: "actions",
+        header: "Actions",
+        label: "Actions",
         cell: ({ row }) => {
             const user = row.original
 
@@ -94,6 +113,7 @@ export const columns: ColumnDef<User>[] = [
                 </div>
             )
         },
+        show: true,
     },
 
 ]
