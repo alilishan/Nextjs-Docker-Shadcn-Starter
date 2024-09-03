@@ -3,22 +3,22 @@ import { url } from "inspector";
 
 const UserService = {
 
-    async getUsers(data: { limit: number, skip: number }) {
+    async getUsers(data: { limit: number, skip: number, key?: string, value?: string }) {
+
+        console.log('data', data);
+
 
         const params = new URLSearchParams({
             limit: data.limit.toString(),
             skip: data.skip.toString(),
-            select: 'firstName,age,lastName,hair'
+            ...(data.key && { key: data.key }),
+            ...(data.value && { value: data.value }),
         }).toString();
 
         const request = {
-            url: `https://dummyjson.com/users?${params}`,
+            url: data.key ? `https://dummyjson.com/users/filter?${params}` : `https://dummyjson.com/users?${params}`,
             method: 'GET',
-            data: {
-            }
         }
-
-        console.log('request', request.url);
 
 
         try {
