@@ -4,6 +4,7 @@ import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
 
 import { cn } from "@/lib/utils";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -16,19 +17,22 @@ import {
 
 import { ExtendedColumnDef } from "./types";
 
-type Checked = DropdownMenuCheckboxItemProps["checked"]
+
 
 interface Props {
     columns: ExtendedColumnDef<any, any>[];
     className?: string;
     children?: React.ReactNode;
+    isLoading?: boolean;
     onShowColumnsChange?: (columns: ExtendedColumnDef<any, any>[]) => void;
 }
+
 
 const DataTableToolBar:FC<Props> = ({
     columns,
     className,
     children,
+    isLoading,
     onShowColumnsChange,
 }) => {
 
@@ -54,6 +58,16 @@ const DataTableToolBar:FC<Props> = ({
         const filteredColumns = newColumns.filter((c) => c.show);
         onShowColumnsChange && onShowColumnsChange(filteredColumns);
     }
+
+
+    if(isLoading) {
+        return (
+            <div className={cn('pb-3 flex w-full items-center gap-1', className)}>
+                <Skeleton className="h-[36px] w-full rounded" />
+            </div>
+        );
+    }
+
 
     return (
         <div className={cn('pb-3 flex w-full items-center gap-1', className)}>

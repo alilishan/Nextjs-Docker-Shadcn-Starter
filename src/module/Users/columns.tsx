@@ -19,6 +19,7 @@ import { User } from "./type"
 import { IoIosMore } from "react-icons/io";
 import { ArrowUpDown } from "lucide-react";
 import { ExtendedColumnDef } from "@/components/DataTable/types";
+import Chip from "@/components/Chips";
 
 
 
@@ -38,11 +39,19 @@ export const columns: ExtendedColumnDef<User, any>[] = [
         show: true,
     },
     {
-        id: "status",
-        accessorKey: "status",
-        header: "Status",
-        label: "Status",
+        id: "gender",
+        accessorKey: "gender",
+        header: "Gender",
+        label: "Gender",
         show: true,
+        cell: ({ row }) => {
+            const user = row.original
+            const gender = user.gender.toUpperCase();
+            const variant = gender === 'MALE' ? 'primary' : 'success';
+            return (
+                <Chip text={gender} variant={variant} />
+            )
+        },
     },
 
     {

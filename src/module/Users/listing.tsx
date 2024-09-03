@@ -59,18 +59,19 @@ const UsersListing:FC<Props> = () => {
     });
 
 
-    if (isLoading) {
-        return <div>
-            <LoadingSpinner />
-        </div>;
-    }
+    // if (isLoading) {
+    //     return <div>
+    //         <LoadingSpinner />
+    //     </div>;
+    // }
 
     return (
         <div>
-            {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+
             <DataTableToolBar
                 columns={columns}
                 onShowColumnsChange={(columns) => setState({ columns })}
+                isLoading={isLoading}
             >
                 <>
                     <p className="text-xs">Filter Hair Color:</p>
@@ -87,18 +88,22 @@ const UsersListing:FC<Props> = () => {
                 </>
             </DataTableToolBar>
 
+
             <DataTable
                 columns={state.columns}
-                data={data.users}
+                data={isLoading ? [] : data.users}
+                isLoading={isLoading}
             />
 
+
             <Pagination
-                totalItems={data.total}
+                totalItems={isLoading ? 0 : data.total}
                 itemsPerPage={state.perPage}
                 skipCount={getSkip()}
                 currentPage={state.page}
                 onPageChange={(page) => setState({ page: page })}
                 onItemsPerPageChange={(perPage) => setState({ perPage: perPage })}
+                isLoading={isLoading}
             />
         </div>
     );

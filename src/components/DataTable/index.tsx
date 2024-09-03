@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import {
     ColumnDef,
@@ -20,28 +20,51 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { Skeleton } from "@/components/ui/skeleton"
 
 
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
+    isLoading: boolean
 }
 
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    isLoading,
 }: DataTableProps<TData, TValue>) {
 
     // Sorting
-    const [sorting, setSorting] = useState<SortingState>([])
+    const [sorting, setSorting] = useState<SortingState>([]);
 
+    // Handle the data
+    const tableData = useMemo(
+        () => (isLoading ? Array(10).fill({}) : data),
+        [isLoading, data]
+    );
 
+    // Handle the columns
+    const tableColumns = useMemo(() =>
+        isLoading
+            ? columns.map((column) => ({
+                ...column,
+                cell: () => (
+                <Skeleton className="h-[20px] rounded" />
+                )
+            }))
+            : columns,
+        [isLoading]
+    );
+
+    // Use the react table
     const table = useReactTable({
-        data,
-        columns,
+        data: tableData,
+        columns: tableColumns,
         getCoreRowModel: getCoreRowModel(),
+
         // getPaginationRowModel: getPaginationRowModel(),
         // Disabled for manual pagination
         // https://tanstack.com/table/v8/docs/api/features/pagination#manualpagination
