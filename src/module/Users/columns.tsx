@@ -17,6 +17,7 @@ import {
 
 import { User } from "./type"
 import { IoIosMore } from "react-icons/io";
+import { ArrowUpDown } from "lucide-react";
 
 
 export const columns: ColumnDef<User>[] = [
@@ -32,10 +33,25 @@ export const columns: ColumnDef<User>[] = [
         accessorKey: "status",
         header: "Status",
     },
+
     {
         accessorKey: "age",
-        header: "Age",
+        header: ({ column }) => {
+            return (
+                <div className="text-center">
+                    <Button
+                        variant="ghost"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        Age
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                </div>
+            )
+        },
+        cell: ({ row }) => <div className="text-center">{row.getValue("age")}</div>,
     },
+
     {
         id: "hair",
         cell: ({ row }) => {

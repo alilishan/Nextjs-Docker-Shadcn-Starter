@@ -4,6 +4,8 @@ import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
+    getSortedRowModel,
+    SortingState,
     useReactTable,
 } from "@tanstack/react-table"
 
@@ -15,6 +17,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { useState } from "react"
 
 
 
@@ -29,6 +32,8 @@ export function DataTable<TData, TValue>({
     data,
 }: DataTableProps<TData, TValue>) {
 
+    const [sorting, setSorting] = useState<SortingState>([])
+
     const table = useReactTable({
         data,
         columns,
@@ -36,6 +41,12 @@ export function DataTable<TData, TValue>({
         // getPaginationRowModel: getPaginationRowModel(),
         // Disabled for manual pagination
         // https://tanstack.com/table/v8/docs/api/features/pagination#manualpagination
+
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting,
+        },
     })
 
     return (
