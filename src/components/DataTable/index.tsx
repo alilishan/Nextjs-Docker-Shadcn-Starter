@@ -56,7 +56,7 @@ export function DataTable<TData, TValue>({
                 )
             }))
             : columns,
-        [isLoading]
+        [isLoading, columns]
     );
 
     // Use the react table
