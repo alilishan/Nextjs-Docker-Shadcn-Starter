@@ -3,14 +3,23 @@ import { url } from "inspector";
 
 const UserService = {
 
-    async getUsers() {
+    async getUsers(data: { limit: number, skip: number }) {
+
+        const params = new URLSearchParams({
+            limit: data.limit.toString(),
+            skip: data.skip.toString(),
+            select: 'firstName,age,lastName,hair'
+        }).toString();
 
         const request = {
-            url: 'https://dummyjson.com/users?limit=5&skip=10&select=firstName,age,lastName,hair',
+            url: `https://dummyjson.com/users?${params}`,
             method: 'GET',
             data: {
             }
         }
+
+        console.log('request', request.url);
+
 
         try {
             const response = await axios.request(request);

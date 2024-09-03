@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { PiGear, PiLock, PiUserCircle } from "react-icons/pi";
-import { FaRegUser } from "react-icons/fa6";
+import { CircleUser } from 'lucide-react';
 // import Image from "next/image";
 
 import { Button } from "@/components/ui/button"
@@ -28,7 +28,7 @@ const UserMenu:FC<Props> = () => {
                 <Button
                 variant="secondary"
                 size="icon"
-                // className="overflow-hidden rounded-full"
+                className="overflow-hidden rounded-full"
                 >
                     {/* <Image
                         src={UserIcon}
@@ -37,7 +37,7 @@ const UserMenu:FC<Props> = () => {
                         alt="Avatar"
                         className="overflow-hidden rounded-full"
                     /> */}
-                    <FaRegUser size={18} />
+                    <CircleUser size={20}/>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">

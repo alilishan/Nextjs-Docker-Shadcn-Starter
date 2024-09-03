@@ -1,6 +1,8 @@
 
 import { NextRequest, NextResponse } from 'next/server'
-import PaymentService from '@/services/Users/service';
+
+
+import UserService from '@/module/Users/service';
 
 
 export async function POST(
@@ -16,7 +18,7 @@ export async function POST(
 
     // const awsId = session.user?.id;
 
-    // const data = await request.json();
-    const returnData = await PaymentService.getUsers(); // awsId, data
+    const data = await request.json();
+    const returnData = await UserService.getUsers(data); // awsId, data
     return NextResponse.json(returnData, { status: 200 });
 }

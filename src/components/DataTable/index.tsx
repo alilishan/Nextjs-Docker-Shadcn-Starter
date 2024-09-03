@@ -4,7 +4,6 @@ import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
-    getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table"
 
@@ -17,8 +16,6 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-import { Button } from "@/components/ui/button"
-import { DataTablePagination } from "./DataTablePagination"
 
 
 interface DataTableProps<TData, TValue> {
@@ -36,13 +33,15 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
+        // getPaginationRowModel: getPaginationRowModel(),
+        // Disabled for manual pagination
+        // https://tanstack.com/table/v8/docs/api/features/pagination#manualpagination
     })
 
     return (
         <div>
 
-            <div className="bg-white rounded-lg border">
+            <div className="bg-white rounded-lg border dark:bg-slate-900">
                 <Table>
                     <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -63,31 +62,31 @@ export function DataTable<TData, TValue>({
                     ))}
                     </TableHeader>
                     <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                        <TableRow
-                            key={row.id}
-                            data-state={row.getIsSelected() && "selected"}
-                        >
-                            {row.getVisibleCells().map((cell) => (
-                            <TableCell key={cell.id}>
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                            <TableRow
+                                key={row.id}
+                                data-state={row.getIsSelected() && "selected"}
+                            >
+                                {row.getVisibleCells().map((cell) => (
+                                <TableCell key={cell.id}>
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </TableCell>
+                                ))}
+                            </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
                             </TableCell>
-                            ))}
-                        </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                        <TableCell colSpan={columns.length} className="h-24 text-center">
-                            No results.
-                        </TableCell>
-                        </TableRow>
-                    )}
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </div>
 
-            <DataTablePagination table={table} />
+            {/* <DataTablePagination table={table} /> */}
 
         </div>
     )

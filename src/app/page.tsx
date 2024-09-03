@@ -4,7 +4,7 @@ import { env } from "@/lib/env";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { HeadingOne } from "@/components/Typography";
-import UsersListing from "@/services/Users/listing";
+import UsersListing from "@/module/Users/listing";
 
 
 
