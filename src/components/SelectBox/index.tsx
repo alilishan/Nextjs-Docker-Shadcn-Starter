@@ -1,15 +1,14 @@
 import React, { FC } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 
 interface Props {
     placeholder: string;
@@ -36,11 +35,13 @@ const SelectBox:FC<Props> = ({
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>
-                <SelectGroup>
-                    {options.map((option) => (
-                        <SelectItem key={option.key} value={option.key}>{option.value}</SelectItem>
-                    ))}
-                </SelectGroup>
+                <ScrollArea className="max-h-[25vh]">
+                    <SelectGroup>
+                        {options.map((option) => (
+                            <SelectItem key={option.key} value={option.key}>{option.value}</SelectItem>
+                        ))}
+                    </SelectGroup>
+                </ScrollArea>
             </SelectContent>
         </Select>
     );
