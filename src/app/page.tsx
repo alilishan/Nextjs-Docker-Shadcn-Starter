@@ -4,7 +4,8 @@ import { env } from "@/lib/env";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { HeadingOne } from "@/components/Typography";
-import UsersListing from "@/module/Users/listing";
+import UsersListing from "@/modules/Users/listing";
+import Snippet from "@/components/Snippet";
 
 
 
@@ -32,6 +33,19 @@ export default async function Home() {
 
             <div className="py-10">
                 <UsersListing />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Snippet>Hello World</Snippet>
+                <Snippet variant="primary">Hello World</Snippet>
+                <Snippet variant="success">Hello World</Snippet>
+                <Snippet variant="danger">Hello World</Snippet>
+                <Snippet size="small">Hello World</Snippet>
+                <Snippet size="medium">Hello World</Snippet>
+                <Snippet size="large">Hello World</Snippet>
+                <Snippet>
+                    <div>Hello World from Snippet</div>
+                </Snippet>
             </div>
 
             {

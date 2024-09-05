@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { Skeleton } from "@/components/ui/skeleton";
 
+import { cn } from "@/lib/utils";
 import styles from './index.module.scss';
 
 interface Props {
@@ -105,17 +105,11 @@ const Pagination:FC<Props> = ({
     };
 
 
-    if (isLoading) {
-        return (
-            <div className={ styles.pagination }>
-                <Skeleton className="h-[30px] w-full rounded" />
-            </div>
-        );
-    }
-
-
     return (
-        <div className={ styles.pagination }>
+        <div className={ cn(
+            styles.pagination,
+            isLoading && 'opacity-50 pointer-events-none',
+        )}>
 
             <div className={ styles.paginationInfo }>
                 {/* <p>Showing  {itemsPerPage} of {totalItems} items</p> */}

@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
             ? columns.map((column) => ({
                 ...column,
                 cell: () => (
-                <Skeleton className="h-[20px] rounded" />
+                <Skeleton className="h-[20px] my-2 rounded" />
                 )
             }))
             : columns,

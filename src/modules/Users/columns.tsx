@@ -93,7 +93,6 @@ export const columns: ExtendedColumnDef<User, any>[] = [
 
     {
         id: "actions",
-        header: "Actions",
         label: "Actions",
         cell: ({ row }) => {
             const user = row.original

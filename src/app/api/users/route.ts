@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 
-import UserService from '@/module/Users/service';
+import UserService from '@/modules/Users/service';
 
 
 export async function POST(

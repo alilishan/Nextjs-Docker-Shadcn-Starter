@@ -60,17 +60,13 @@ const DataTableToolBar:FC<Props> = ({
     }
 
 
-    if(isLoading) {
-        return (
-            <div className={cn('pb-3 flex w-full items-center gap-1', className)}>
-                <Skeleton className="h-[36px] w-full rounded" />
-            </div>
-        );
-    }
-
 
     return (
-        <div className={cn('pb-3 flex w-full items-center gap-1', className)}>
+        <div className={cn(
+            'pb-3 flex w-full items-center gap-1',
+            className,
+            isLoading && 'opacity-50 pointer-events-none',
+        )}>
             <div className="flex items-center gap-1">
                 {children}
             </div>

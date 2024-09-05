@@ -3,10 +3,10 @@
 import React, { FC, useReducer, useState } from "react";
 import useSWR from "swr";
 
+import { columns } from "./columns";
+
 import { fetcher } from "@/services/SWR";
 import { DataTable } from "@/components/DataTable";
-import { columns } from "./columns";
-import LoadingSpinner from "@/components/Spinner";
 import Pagination from "@/components/Pagination";
 import SelectBox from "@/components/SelectBox";
 import DataTableToolBar from "@/components/DataTable/ToolBar";
