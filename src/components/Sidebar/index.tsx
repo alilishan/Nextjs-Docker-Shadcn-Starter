@@ -1,21 +1,22 @@
 "use client";
 
 import React, { FC, useContext } from "react";
+import Image from "next/image";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { PiMonitor, PiBarcode, PiAddressBook, PiFolder } from "react-icons/pi";
+import { PiMonitor, PiBarcode, PiAddressBook, PiFolder, PiGear, PiUser, PiLock, PiCableCar } from "react-icons/pi";
 
+import { Separator } from "@/components/ui/separator";
+import MarcLogo from "@/assets/marc-logo-corp.jpg";
 
 import SidebarContext from "./context";
-import MarcLogo from "@/assets/marc-logo-corp.jpg";
-import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 
 interface Props {
     className?: string;
 }
 
-const Sidebar:FC<Props> = () => {
+const Sidebar: FC<Props> = () => {
     const pathName = usePathname();
     const { isOpen } = useContext(SidebarContext);
 
@@ -50,9 +51,44 @@ const Sidebar:FC<Props> = () => {
 
                 <div className="flex flex-col flex-1 p-3">
                     <SidebarItem href="/app" icon={<PiMonitor size={'22px'} />} text="Dashboard" active={pathName === '/'} />
-                    <SidebarItem href="/app/codes" icon={<PiBarcode size={'22px'} />} text="Codes" active={pathName.includes('/codes')} />
+                    <SidebarItem
+                        href="/app/codes"
+                        icon={<PiBarcode size={'22px'} />}
+                        text="Codes"
+                        active={pathName.includes('/codes')}
+                        badge={{ number: 5, colorClass: 'bg-primary' }} // Using Tailwind class
+                    />
                     <SidebarItem href="/app/customers" icon={<PiAddressBook size={'22px'} />} text="Customers" active={pathName.includes('/customers')} />
                     <SidebarItem href="/app/subscriptions" icon={<PiFolder size={'22px'} />} text="Subscriptions" active={pathName.includes('/subscriptions')} />
+
+                    <Separator className="my-2" />
+
+                    <SidebarItem
+                        icon={<PiCableCar size={'22px'} />}
+                        text="Settings"
+                        active={pathName.includes('/settings')}
+                        badge={{ number: 2, colorClass: 'bg-amber-200 text-amber-800' }} // Using Tailwind class
+                        groupItems={[
+                            {
+                                href: "/app/settings/general",
+                                icon: <PiGear size={'18px'} />,
+                                text: "General Settings",
+                                active: pathName.includes('/settings/general')
+                            },
+                            {
+                                href: "/app/settings/profile",
+                                icon: <PiUser size={'18px'} />,
+                                text: "Profile Settings",
+                                active: pathName.includes('/settings/profile')
+                            },
+                            {
+                                href: "/app/settings/security",
+                                icon: <PiLock size={'18px'} />,
+                                text: "Security Settings",
+                                active: pathName.includes('/settings/security')
+                            }
+                        ]}
+                    />
                 </div>
 
 
