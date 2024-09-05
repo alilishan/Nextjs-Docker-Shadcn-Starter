@@ -11,6 +11,7 @@ import Pagination from "@/components/Pagination";
 import SelectBox from "@/components/SelectBox";
 import DataTableToolBar from "@/components/DataTable/ToolBar";
 import FilterSheet from "@/components/FilterSheet";
+import SelectSearchBox from "@/components/SelectSearchBox";
 
 
 interface Props {
@@ -76,6 +77,7 @@ const UsersListing:FC<Props> = () => {
             >
                 <>
                     <p className="text-xs">Filter Hair Color:</p>
+
                     <SelectBox
                         placeholder="Choose Hair Color"
                         value={state.filterHairColor}
@@ -136,6 +138,17 @@ const UsersListing:FC<Props> = () => {
                         }}
                     />
                 </>
+
+                <SelectSearchBox
+                    placeholder="Search..."
+                    width="250px"
+                    options={[
+                        { key: "hair.color", value: "Hair Color" },
+                        { key: "hair.length", value: "Hair Length", selected: true },
+                        { key: "hair.type", value: "Hair Type" },
+                    ]}
+                    onChange={(items) => console.log(items)}
+                />
             </DataTableToolBar>
 
 

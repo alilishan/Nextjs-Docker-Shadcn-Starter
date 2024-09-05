@@ -31,7 +31,7 @@ const SelectBox:FC<Props> = ({
             value={value}
             onValueChange={onChange}
         >
-            <SelectTrigger className="bg-white rounded-md border dark:bg-slate-900 w-[180px]">
+            <SelectTrigger className="bg-white rounded-md border font-medium dark:bg-slate-900 w-[180px]">
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>

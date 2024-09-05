@@ -48,6 +48,7 @@ export default async function Home() {
                 </Snippet>
             </div>
 
+
             {
                 // create an array of 10 items
                 // Array.from({ length: 10 }).map((_, index) => (
