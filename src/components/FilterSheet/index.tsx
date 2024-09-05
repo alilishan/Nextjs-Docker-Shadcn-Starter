@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import { SlidersHorizontal, ChevronDown, ChevronRight, Circle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 interface FilterOption {
     key: string;
@@ -77,6 +78,10 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
         return appliedFilters[groupName] && appliedFilters[groupName].length > 0;
     };
 
+    const handleClearAllFilters = () => {
+        setAppliedFilters({});
+    };
+
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -94,8 +99,17 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
                 className="w-[400px] sm:w-[540px] p-0"
             >
                 <div className="flex flex-col h-full">
-                    <div className="p-6">
+                    <div className="p-6 flex justify-between items-center">
                         <h2 className="text-lg font-semibold">{title}</h2>
+                        <Button
+                            variant="link"
+                            size="sm"
+                            onClick={handleClearAllFilters}
+                            disabled={totalAppliedFilters === 0}
+                            className="text-primary p-0 h-auto"
+                        >
+                            Clear All
+                        </Button>
                     </div>
                     <ScrollArea className="flex-grow">
                         <div className="px-6">
