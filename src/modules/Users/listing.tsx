@@ -10,6 +10,7 @@ import { DataTable } from "@/components/DataTable";
 import Pagination from "@/components/Pagination";
 import SelectBox from "@/components/SelectBox";
 import DataTableToolBar from "@/components/DataTable/ToolBar";
+import FilterSheet from "@/components/FilterSheet";
 
 
 interface Props {
@@ -84,6 +85,55 @@ const UsersListing:FC<Props> = () => {
                             { key: "Brown", value: "Brown" },
                         ]}
                         onChange={(value) => setState({ filterHairColor: value })}
+                    />
+
+                    <FilterSheet
+                        title="Custom Filters"
+                        filterGroups={
+                            [
+                                {
+                                    name: "Hair",
+                                    type: "checkbox",
+                                    options: [
+                                        { key: "hair.color", label: "Hair Color" },
+                                        { key: "hair.length", label: "Hair Length" },
+                                        { key: "hair.type", label: "Hair Type" },
+                                    ]
+                                },
+                                {
+                                    name: "Age",
+                                    type: "radio",
+                                    options: [
+                                        { key: "18-25", label: "18-25" },
+                                        { key: "26-35", label: "26-35" },
+                                        { key: "36-45", label: "36-45" },
+                                        { key: "46+", label: "46+" }
+                                    ]
+                                },
+                                {
+                                    name: "Gender",
+                                    type: "select",
+                                    options: [
+                                        { key: "male", label: "Male" },
+                                        { key: "female", label: "Female" },
+                                        { key: "other", label: "Other" }
+                                    ]
+                                },
+                                {
+                                    name: "Occupation",
+                                    type: "checkbox",
+                                    options: [
+                                        { key: "student", label: "Student" },
+                                        { key: "employed", label: "Employed" },
+                                        { key: "self-employed", label: "Self-employed" },
+                                        { key: "unemployed", label: "Unemployed" }
+                                    ]
+                                }
+                            ]
+                        }
+                        onSubmitFilters={(filters) => {
+                            console.log(filters);
+                        }}
                     />
                 </>
             </DataTableToolBar>
