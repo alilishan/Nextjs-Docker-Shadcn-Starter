@@ -11,6 +11,7 @@ import MarcLogo from "@/assets/marc-logo-corp.jpg";
 
 import SidebarContext from "./context";
 import SidebarItem from "./SidebarItem";
+import SidebarUserMenu from "./SidebarUserMenu";
 
 interface Props {
     className?: string;
@@ -94,18 +95,9 @@ const Sidebar: FC<Props> = () => {
 
 
                 {/* Footer */}
-                {/* <div className={`${isOpen ? 'p-4 justify-between' : 'p-2 justify-center'} border-t w-full flex items-center  gap-3 mt-auto`}>
-                    <Avatar name="Junior" />
-                    { isOpen &&
-                        <>
-                            <div className="text-sm flex-1">
-                                <h6 className="text-dark font-medium">Junior</h6>
-                                <p className="text-xs">Reseller</p>
-                            </div>
-                            <BsThreeDotsVertical size={'18px'} />
-                        </>
-                    }
-                </div> */}
+                <div className={`${isOpen ? 'justify-between' : 'justify-center'} border-t w-full flex items-center  gap-3 mt-auto`}>
+                    <SidebarUserMenu />
+                </div>
 
 
             </nav>
