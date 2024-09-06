@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Trash2 } from 'lucide-react'; // Import the trash icon
+
 import {
     Dialog,
     DialogContent,
@@ -9,12 +11,11 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button, ButtonProps } from "@/components/ui/button";
-import { Trash2 } from 'lucide-react'; // Import the trash icon
 
 type ButtonVariant = ButtonProps['variant'];
 
 interface ConfirmModalProps {
-    title: string | React.ReactNode;
+    title: string | React.ReactNode; // Make title required
     message: string | React.ReactNode;
     onConfirm: () => void;
     onCancel?: () => void;
@@ -68,7 +69,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
-                    <DialogDescription>{message}</DialogDescription>
+                    {message && <DialogDescription>{message}</DialogDescription>}
                 </DialogHeader>
                 <DialogFooter className="pt-4">
                     <Button variant={cancelVariant} onClick={handleCancel}>

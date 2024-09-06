@@ -64,9 +64,10 @@ export const columns: ExtendedColumnDef<User, any>[] = [
                 <div className="text-center">
                     <Button
                         variant="ghost"
-                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="uppercase text-xs font-bold"
                     >
-                        Age
+                        AGE
                         <ArrowUpDown className="ml-2 h-4 w-4" />
                     </Button>
                 </div>

@@ -21,6 +21,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Skeleton } from "@/components/ui/skeleton"
+import { cn } from "@/lib/utils"
 
 
 
@@ -79,14 +80,21 @@ export function DataTable<TData, TValue>({
     return (
         <div>
 
-            <div className="bg-white rounded-md border dark:bg-slate-900">
+            <div className="bg-white p-4 rounded-lg dark:bg-slate-900">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="[&_tr]:border-0">
                     {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
+                        <TableRow key={headerGroup.id} className="">
+                            {headerGroup.headers.map((header, index) => {
                                 return (
-                                <TableHead key={header.id}>
+                                <TableHead
+                                    key={header.id}
+                                    className={cn(
+                                        'text-slate-4700 uppercase text-xs font-bold bg-muted',
+                                        index === 0 && 'rounded-l-lg',
+                                        index === headerGroup.headers.length - 1 && 'rounded-r-lg'
+                                    )}
+                                >
                                     {header.isPlaceholder
                                     ? null
                                     : flexRender(
@@ -101,7 +109,7 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.map((row, index) => (
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
