@@ -20,6 +20,7 @@ import { IoIosMore } from "react-icons/io";
 import { ArrowUpDown } from "lucide-react";
 import { ExtendedColumnDef } from "@/components/DataTable/types";
 import Chip from "@/components/Chips";
+import ConfirmModal from "@/components/Modals/Confirm";
 
 
 
@@ -99,6 +100,21 @@ export const columns: ExtendedColumnDef<User, any>[] = [
 
             return (
                 <div className="flex justify-end w-full">
+
+                    <ConfirmModal
+                        title="Delete User"
+                        message="Are you sure you want to delete this user?"
+                        onConfirm={() => {
+                            console.log("User deleted");
+                        }}
+                        onCancel={() => {
+                            console.log("User deletion cancelled");
+                        }}
+                        triggerIcon="trash"
+                        triggerText="Delete"
+                        confirmVariant="destructive"
+                    />
+
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="ghost" className="h-8 w-8 p-0">

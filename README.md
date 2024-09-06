@@ -1,6 +1,6 @@
 # Storio Starter Pack
 
-* Docker
+* Docker - `ounch/nextjs-env`
 * NextJS 14 - Typescript
 * Tailwind
 * SASS
@@ -10,10 +10,12 @@
 ## Docker Based Development
 To handle the difference of node versions
 
-```bash
-# Build Image
-docker build -t storio-starter-pack . --no-cache
+You need docker image `ounch/nextjs-env`
+```
+docker pull ounch/nextjs-env
+```
 
+```bash
 # First Install
 npm run docker:install
 

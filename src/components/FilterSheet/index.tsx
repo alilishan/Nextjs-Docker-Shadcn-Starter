@@ -42,6 +42,7 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const [appliedFilters, setAppliedFilters] = useState<Record<string, string[]>>({});
     const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+    const [confirmedFilters, setConfirmedFilters] = useState<Record<string, string[]>>({});
 
     const handleFilterToggle = (groupName: string, key: string) => {
         setAppliedFilters(prev => {
@@ -67,10 +68,11 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
         );
     };
 
-    const totalAppliedFilters = Object.values(appliedFilters).flat().length;
+    const totalConfirmedFilters = Object.values(confirmedFilters).flat().length;
 
     const handleApplyFilters = () => {
         onSubmitFilters(appliedFilters);
+        setConfirmedFilters(appliedFilters);
         setIsOpen(false);
     };
 
@@ -80,6 +82,7 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
 
     const handleClearAllFilters = () => {
         setAppliedFilters({});
+        setConfirmedFilters({});
     };
 
     return (
@@ -88,8 +91,8 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
                 <Button variant="outline" className="flex items-center gap-2">
                     <SlidersHorizontal size={16} />
                     {triggerText}
-                    {totalAppliedFilters > 0 && (
-                        <Badge variant="secondary">{totalAppliedFilters}</Badge>
+                    {totalConfirmedFilters > 0 && (
+                        <Badge variant="secondary">{totalConfirmedFilters}</Badge>
                     )}
                 </Button>
             </SheetTrigger>
@@ -105,7 +108,7 @@ const FilterSheet: React.FC<FilterSheetProps> = ({
                             variant="link"
                             size="sm"
                             onClick={handleClearAllFilters}
-                            disabled={totalAppliedFilters === 0}
+                            disabled={totalConfirmedFilters === 0}
                             className="text-primary p-0 h-auto"
                         >
                             Clear All

@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "docker:dev": "docker run -it --rm -v .:/app -v ./node_modules:/app/node_modules -p 127.0.0.1:3000:3000 storio-starter-pack npm run dev",
-    "docker:build": "docker run -it -v .:/app -v ./node_modules:/app/node_modules storio-starter-pack npm run build",
-    "docker:start": "docker run -it -v .:/app -v ./node_modules:/app/node_modules -p 127.0.0.1:3000:3000 storio-starter-pack npm run start",
-    "docker:install": "docker run -it -v .:/app -v ./node_modules:/app/node_modules storio-starter-pack npm install"
+    "docker:dev": "docker run -it --rm -v .:/app -v ./node_modules:/app/node_modules -p 127.0.0.1:3000:3000 ounch/nextjs-env npm run dev",
+    "docker:build": "docker run -it -v .:/app -v ./node_modules:/app/node_modules ounch/nextjs-env npm run build",
+    "docker:start": "docker run -it -v .:/app -v ./node_modules:/app/node_modules -p 127.0.0.1:3000:3000 ounch/nextjs-env npm run start",
+    "docker:install": "docker run -it -v .:/app -v ./node_modules:/app/node_modules ounch/nextjs-env npm install"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.0",
