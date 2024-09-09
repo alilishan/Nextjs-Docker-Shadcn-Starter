@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 interface Props {
     placeholder: string;
@@ -18,6 +19,7 @@ interface Props {
         value: string;
     }[];
     onChange: (value: string) => void;
+    width?: string;
 }
 
 const SelectBox:FC<Props> = ({
@@ -25,13 +27,14 @@ const SelectBox:FC<Props> = ({
     value,
     options,
     onChange,
+    width = '100%'
 }) => {
     return (
         <Select
             value={value}
             onValueChange={onChange}
         >
-            <SelectTrigger className="bg-white rounded-md border font-medium dark:bg-slate-900 w-[180px]">
+            <SelectTrigger className={cn('bg-white rounded-md border font-medium dark:bg-slate-900', `w-[${width}]`)}>
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>

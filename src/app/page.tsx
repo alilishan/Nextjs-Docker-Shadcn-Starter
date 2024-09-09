@@ -2,10 +2,10 @@
 import { env } from "@/lib/env";
 
 
-import Breadcrumbs from "@/components/Breadcrumbs";
-import { HeadingOne } from "@/components/Typography";
 import UsersListing from "@/modules/Users/listing";
 import Snippet from "@/components/Snippet";
+import PageHeading from "@/components/Typography/PageHeading";
+import UserCreateForm from "@/modules/Users/UserCreateForm";
 
 
 
@@ -28,8 +28,14 @@ export default async function Home() {
     return (
         <main>
 
-            <HeadingOne text="Dashboard" />
-            <Breadcrumbs crumbs={ breadcrumbs } />
+            <PageHeading
+                headingText="Dashboard"
+                breadcrumbs={ breadcrumbs }
+            >
+                <div className="flex items-center">
+                    <UserCreateForm />
+                </div>
+            </PageHeading>
 
             <div className="py-10">
                 <UsersListing />

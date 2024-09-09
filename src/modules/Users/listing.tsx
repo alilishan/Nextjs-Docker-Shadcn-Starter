@@ -87,6 +87,7 @@ const UsersListing:FC<Props> = () => {
                             { key: "Brown", value: "Brown" },
                         ]}
                         onChange={(value) => setState({ filterHairColor: value })}
+                        width="180px"
                     />
 
                     <FilterSheet
