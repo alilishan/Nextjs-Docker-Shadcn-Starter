@@ -5,37 +5,51 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Label } from '@/components/ui/label';
 import SelectBox from "@/components/SelectBox";
 import FormSheet from '@/components/FormSheet';
-import { SheetFooter } from "@/components/ui/sheet";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
-import { genderOptions, hairColorOptions, userCreateSchema, FormData } from './schema';
+import { genderOptions, hairColorOptions, userEditSchema, FormData } from './schema';
 
+interface UserEditFormProps {
+    user: FormData; // Assuming you'll pass the user data to edit
+}
 
-const UserCreateForm: React.FC = () => {
-
+const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-	const { watch, control, handleSubmit, formState: { errors } } = useForm<FormData>({
-		resolver: zodResolver(userCreateSchema),
-	});
+    const { watch, control, handleSubmit, formState: { errors } } = useForm<FormData>({
+        resolver: zodResolver(userEditSchema),
+        defaultValues: {
+            ...user,
+            hairColor: 'brown',
+        }, // Pre-fill the form with user data
+    });
 
-	const onSubmit = (data: FormData) => {
-		console.log(data);
-		// Handle form submission
-	};
+    const onSubmit = (data: FormData) => {
+        console.log(data);
+        // Handle form submission for editing
+    };
 
-	return (
-		<FormSheet
-			triggerButton={<Button>Create User</Button>}
-			title="Create New User"
-            submitButtonText="Create User"
+   const handleOpenChange = (open: boolean) => {
+        setIsOpen(open);
+    };
+
+    const handleDropdownItemSelect = (event: Event) => {
+        event.preventDefault();
+        setIsOpen(true);
+    };
+
+    return (
+        <FormSheet
+            triggerButton={<DropdownMenuItem onSelect={handleDropdownItemSelect}>Edit User</DropdownMenuItem>}
+            title="Edit User"
+            submitButtonText="Save Changes"
             onSubmit={handleSubmit(onSubmit)}
             isOpen={isOpen}
-            onOpenChange={setIsOpen}
-		>
+            onOpenChange={handleOpenChange}
+        >
             <div>
                 <Label htmlFor="firstName">First Name</Label>
                 <Controller
@@ -59,7 +73,7 @@ const UserCreateForm: React.FC = () => {
                 {errors.lastName && <p className="text-red-500">{errors.lastName.message}</p>}
             </div>
 
-            <div className='flex w-full items-center justify-between gap-2'>
+            <div className='flex justify-between gap-2'>
                 <div className='w-1/3'>
                     <Label htmlFor="gender">Gender</Label>
                     <Controller
@@ -76,7 +90,7 @@ const UserCreateForm: React.FC = () => {
                     />
                     {errors.gender && <p className="text-red-500">{errors.gender.message}</p>}
                 </div>
-                <div className=''>
+                <div className='w-1/3'>
                     <Label htmlFor="age">Age</Label>
                     <Controller
                         name="age"
@@ -87,7 +101,7 @@ const UserCreateForm: React.FC = () => {
                     />
                     {errors.age && <p className="text-red-500">{errors.age.message}</p>}
                 </div>
-                <div className=''>
+                <div className='w-1/3'>
                     <Label htmlFor="hairColor">Hair Color</Label>
                     <Controller
                         name="hairColor"
@@ -105,17 +119,8 @@ const UserCreateForm: React.FC = () => {
                 </div>
             </div>
 
-			<div className="mt-4">
-				<Label>Form State:</Label>
-				<pre className="bg-gray-100 p-2 rounded-md overflow-auto max-h-40 text-sm">
-					{JSON.stringify(watch(), null, 2)}
-				</pre>
-			</div>
-
-		</FormSheet>
-	);
+        </FormSheet>
+    );
 };
 
-export default UserCreateForm;
-
-
+export default UserEditForm;

@@ -21,6 +21,7 @@ import { ArrowUpDown } from "lucide-react";
 import { ExtendedColumnDef } from "@/components/DataTable/types";
 import Chip from "@/components/Chips";
 import ConfirmModal from "@/components/Modals/Confirm";
+import UserEditForm from "./UserEditForm";
 
 
 
@@ -131,7 +132,9 @@ export const columns: ExtendedColumnDef<User, any>[] = [
                                 Copy user ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>View customer</DropdownMenuItem>
+
+                            <UserEditForm user={user as any} />
+
                             <DropdownMenuItem>View payment details</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

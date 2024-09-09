@@ -11,6 +11,10 @@ export const userCreateSchema = z.object({
 
 export type FormData = z.infer<typeof userCreateSchema>;
 
+export const userEditSchema = userCreateSchema.extend({
+    id: z.string().min(1, 'ID is required'),
+});
+
 
 export const genderOptions = [
 	{ key: 'male', value: 'Male' },
