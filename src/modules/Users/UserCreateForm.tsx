@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
 import { Label } from '@/components/ui/label';
+import InputBox from '@/components/InputBox';
 import SelectBox from "@/components/SelectBox";
 import FormSheet from '@/components/FormSheet';
-import { SheetFooter } from "@/components/ui/sheet";
+
 
 import { genderOptions, hairColorOptions, userCreateSchema, FormData } from './schema';
 
@@ -37,71 +38,94 @@ const UserCreateForm: React.FC = () => {
             onOpenChange={setIsOpen}
 		>
             <div>
-                <Label htmlFor="firstName">First Name</Label>
                 <Controller
                     name="firstName"
                     control={control}
                     render={({ field }) => (
-                        <Input id="firstName" {...field} placeholder="First Name" />
+                        <InputBox
+                            {...field}
+                            label="First Name"
+                            required
+                            isError={!!errors.firstName}
+                            errorMessage={errors.firstName?.message}
+                            variant="ghost"
+                        />
+                        // <Input id="firstName" {...field} placeholder="First Name" />
                     )}
                 />
-                {errors.firstName && <p className="text-red-500">{errors.firstName.message}</p>}
             </div>
             <div>
-                <Label htmlFor="lastName">Last Name</Label>
                 <Controller
                     name="lastName"
                     control={control}
                     render={({ field }) => (
-                        <Input id="lastName" {...field} placeholder="Last Name" />
+                        <InputBox
+                            {...field}
+                            label="Last Name"
+                            required
+                            isError={!!errors.lastName}
+                            errorMessage={errors.lastName?.message}
+                            variant="ghost"
+                        />
                     )}
                 />
-                {errors.lastName && <p className="text-red-500">{errors.lastName.message}</p>}
             </div>
 
-            <div className='flex w-full items-center justify-between gap-2'>
+            <div className='flex w-full items-start justify-between gap-2'>
                 <div className='w-1/3'>
-                    <Label htmlFor="gender">Gender</Label>
                     <Controller
                         name="gender"
                         control={control}
                         render={({ field }) => (
                             <SelectBox
+                                label='Gender'
+                                required={true}
                                 options={genderOptions}
                                 value={field.value}
                                 onChange={field.onChange}
                                 placeholder="Select Gender"
+                                isError={!!errors.gender}
+                                errorMessage={errors.gender?.message}
+                                variant="ghost"
                             />
                         )}
                     />
-                    {errors.gender && <p className="text-red-500">{errors.gender.message}</p>}
                 </div>
                 <div className=''>
-                    <Label htmlFor="age">Age</Label>
                     <Controller
                         name="age"
                         control={control}
                         render={({ field }) => (
-                            <Input id="age" {...field} type="number" placeholder="Age" />
+                            <InputBox
+                                {...field}
+                                label="Age"
+                                required
+                                isError={!!errors.age}
+                                errorMessage={errors.age?.message}
+                                variant="ghost"
+                                type="number"
+                            />
                         )}
                     />
-                    {errors.age && <p className="text-red-500">{errors.age.message}</p>}
                 </div>
                 <div className=''>
-                    <Label htmlFor="hairColor">Hair Color</Label>
                     <Controller
                         name="hairColor"
                         control={control}
                         render={({ field }) => (
                             <SelectBox
+                                label='Hair Color'
+                                required={true}
                                 options={hairColorOptions}
                                 value={field.value}
                                 onChange={field.onChange}
                                 placeholder="Select Hair Color"
+                                isError={!!errors.hairColor}
+                                errorMessage={errors.hairColor?.message}
+                                variant="ghost"
                             />
                         )}
                     />
-                    {errors.hairColor && <p className="text-red-500">{errors.hairColor.message}</p>}
                 </div>
             </div>
 

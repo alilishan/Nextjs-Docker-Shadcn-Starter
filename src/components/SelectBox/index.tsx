@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import {
   Select,
@@ -11,7 +12,35 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
+
+const inputVariants = cva(
+    "rounded-md font-medium",
+    {
+        variants: {
+            variant: {
+                default: "border border-input bg-white shadow-sm dark:bg-background",
+                ghost: "border-0 bg-slate-100 hover:bg-accent hover:text-accent-foreground dark:bg-slate-800 dark:hover:bg-slate-700",
+                bordered: "border-2 border-input bg-transparent",
+            },
+            isError: {
+                true: "border-red-500 focus-visible:ring-red-500",
+                false: "",
+            },
+        },
+        defaultVariants: {
+            variant: "default",
+            isError: false,
+        },
+    }
+);
+
+
+
 interface Props {
+    label?: string;
+    required?: boolean;
+    isError?: boolean;
+    errorMessage?: string;
     placeholder: string;
     value: string;
     options: {
@@ -20,33 +49,53 @@ interface Props {
     }[];
     onChange: (value: string) => void;
     width?: string;
+    variant?: VariantProps<typeof inputVariants>['variant'];
+    className?: string;
 }
 
 const SelectBox:FC<Props> = ({
+    label,
+    required,
+    isError,
+    errorMessage,
     placeholder,
     value,
     options,
+    variant,
+    className,
     onChange,
     width = '100%'
 }) => {
     return (
-        <Select
-            value={value}
-            onValueChange={onChange}
-        >
-            <SelectTrigger className={cn('bg-white rounded-md border font-medium dark:bg-slate-900', ``)} style={{width: width}}>
-                <SelectValue placeholder={placeholder} />
-            </SelectTrigger>
-            <SelectContent>
-                <ScrollArea className="max-h-[25vh]">
-                    <SelectGroup>
-                        {options.map((option) => (
-                            <SelectItem key={option.key} value={option.key}>{option.value}</SelectItem>
-                        ))}
-                    </SelectGroup>
-                </ScrollArea>
-            </SelectContent>
-        </Select>
+            <div style={{width: width}}>
+                {label && (
+                    <label className="block text-sm font-medium mb-1">
+                        {label}
+                        {required && <span className="text-red-500 ml-1">*</span>}
+                    </label>
+                )}
+                <Select
+                    value={value}
+                    onValueChange={onChange}
+                >
+                    <SelectTrigger className={cn(inputVariants({ variant, isError, className }))} style={{width: width}}>
+                        <SelectValue placeholder={placeholder} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <ScrollArea className="max-h-[25vh]">
+                            <SelectGroup>
+                                {options.map((option) => (
+                                    <SelectItem key={option.key} value={option.key}>{option.value}</SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </ScrollArea>
+                    </SelectContent>
+                </Select>
+                {isError && errorMessage && (
+                    <p className="mt-1 text-sm text-red-500">{errorMessage}</p>
+                )}
+            </div>
+
     );
 };
 
