@@ -1,9 +1,10 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Eye, EyeOff } from "lucide-react"; // Import eye icons
 
 const inputVariants = cva(
-    "flex h-9 w-full rounded-md px-3 py-1 text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+    "flex h-10 w-full rounded-md px-3 py-1 text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
     {
         variants: {
             variant: {
@@ -43,6 +44,9 @@ const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(
         variant,
         ...props
     }, ref) => {
+        const [showPassword, setShowPassword] = React.useState(false);
+        const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
         return (
             <div className="w-full">
                 {label && (
@@ -51,12 +55,24 @@ const InputBox = React.forwardRef<HTMLInputElement, InputBoxProps>(
                         {required && <span className="text-red-500 ml-1">*</span>}
                     </label>
                 )}
-                <input
-                    type={type}
-                    className={cn(inputVariants({ variant, isError, className }))}
-                    ref={ref}
-                    {...props}
-                />
+                <div className="relative">
+                    <input
+                        type={type === 'password' && showPassword ? 'text' : type}
+                        className={cn(inputVariants({ variant, isError, className }),
+                            type === 'password' ? 'pr-10' : '')}
+                        ref={ref}
+                        {...props}
+                    />
+                    {type === 'password' && (
+                        <button
+                            type="button"
+                            onClick={togglePasswordVisibility}
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                        >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    )}
+                </div>
                 {isError && errorMessage && (
                     <p className="mt-1 text-sm text-red-500">{errorMessage}</p>
                 )}

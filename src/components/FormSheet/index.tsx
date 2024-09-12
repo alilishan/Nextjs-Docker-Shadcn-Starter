@@ -48,7 +48,7 @@ const FormSheet: React.FC<FormSheetProps> = ({
                 </SheetHeader>
                 <div className="flex flex-col flex-grow">
                     <div className="space-y-4 flex flex-grow overflow-y-auto px-1">
-                        <form onSubmit={onSubmit} className='flex flex-col gap-4 flex-grow'>
+                        <form onSubmit={onSubmit} className='flex flex-col gap-6 flex-grow'>
                             {children}
 
                             <SheetFooter className='mt-auto border-t pt-4'>

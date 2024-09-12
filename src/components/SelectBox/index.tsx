@@ -14,12 +14,12 @@ import { cn } from "@/lib/utils";
 
 
 const inputVariants = cva(
-    "rounded-md font-medium",
+    "h-10 rounded-md font-medium",
     {
         variants: {
             variant: {
                 default: "border border-input bg-white shadow-sm dark:bg-background",
-                ghost: "border-0 bg-slate-100 hover:bg-accent hover:text-accent-foreground dark:bg-slate-800 dark:hover:bg-slate-700",
+                ghost: "border-0 shadow-none bg-slate-100 hover:bg-accent hover:text-accent-foreground dark:bg-slate-800 dark:hover:bg-slate-700",
                 bordered: "border-2 border-input bg-transparent",
             },
             isError: {

@@ -91,7 +91,7 @@ const UserCreateForm: React.FC = () => {
                         )}
                     />
                 </div>
-                <div className=''>
+                <div className='w-1/3'>
                     <Controller
                         name="age"
                         control={control}
@@ -108,7 +108,7 @@ const UserCreateForm: React.FC = () => {
                         )}
                     />
                 </div>
-                <div className=''>
+                <div className='w-1/3'>
                     <Controller
                         name="hairColor"
                         control={control}
@@ -125,6 +125,30 @@ const UserCreateForm: React.FC = () => {
                                 variant="ghost"
                             />
                         )}
+                    />
+                </div>
+
+            </div>
+
+            <div className='flex w-full items-start justify-between gap-2'>
+                <div className='w-1/2'>
+                    <InputBox
+                        label="Password"
+                        required
+                        isError={false}
+                        errorMessage={''}
+                        variant="ghost"
+                        type="password"
+                    />
+                </div>
+                <div className='w-1/2'>
+                    <InputBox
+                        label="Confirm Password"
+                        required
+                        isError={false}
+                        errorMessage={''}
+                        variant="ghost"
+                        type="password"
                     />
                 </div>
             </div>
