@@ -24,7 +24,10 @@ const UserService = {
             return data;
         } catch (error: any) {
             console.log('Error getting users', error?.response?.data);
-            return null;
+            return {
+                error: true,
+                users: [],
+            };
         }
 
     }

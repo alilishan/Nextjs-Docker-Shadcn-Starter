@@ -10,9 +10,11 @@ import { Label } from '@/components/ui/label';
 import InputBox from '@/components/InputBox';
 import SelectBox from "@/components/SelectBox";
 import FormSheet from '@/components/FormSheet';
+import DropZoneSingle from '@/components/DropZone/DropZoneSingle';
 
 
 import { genderOptions, hairColorOptions, userCreateSchema, FormData } from './schema';
+
 
 
 const UserCreateForm: React.FC = () => {
@@ -149,6 +151,39 @@ const UserCreateForm: React.FC = () => {
                         errorMessage={''}
                         variant="ghost"
                         type="password"
+                    />
+                </div>
+            </div>
+
+            {/* <DropZone
+                onFilesUploaded={(files) => {
+                    console.log(files);
+                }}
+                multiple={true}
+            /> */}
+
+            <div className='flex w-full items-start justify-between gap-2'>
+                <div className='w-full'>
+                    <Controller
+                        name="fileName"
+                        control={control}
+                        render={({ field }) => (
+                            <DropZoneSingle
+                                label="Profile Picture"
+                                required
+                                isError={!!errors.fileName}
+                                errorMessage={errors.fileName?.message}
+                                onFileUploaded={(file: any) => {
+                                    console.log(file);
+
+                                    field.onChange(file ? file.path : '');
+                                }}
+                                acceptedTypes={{
+                                    'image/png': ['.png'],
+                                    'image/jpeg': ['.jpg', '.jpeg'],
+                                }}
+                            />
+                        )}
                     />
                 </div>
             </div>

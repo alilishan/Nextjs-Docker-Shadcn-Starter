@@ -7,6 +7,7 @@ export const userCreateSchema = z.object({
 	gender: z.enum(['male', 'female', 'other']),
 	age: z.number().int().positive().min(18, 'Must be at least 18 years old'),
 	hairColor: z.enum(['black', 'brown', 'blonde', 'red', 'other']),
+    fileName: z.string().min(1, 'File name is required'),
 });
 
 export type FormData = z.infer<typeof userCreateSchema>;

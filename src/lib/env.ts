@@ -9,6 +9,9 @@ const schema = z.object({
 
     NEXT_TELEMETRY_DISABLED: z.string().trim().default('1'),
 
+    APP_UPLOADS_SIZE: z.string().default('10'),
+    APP_UPLOADS_PATH: z.string().trim().min(1).default('./public/uploads'),
+
 });
 
 export const env = schema.parse(process.env);
