@@ -7,12 +7,6 @@ import '../sass/index.scss';
 
 // Import Utils
 import { cn } from "@/lib/utils";
-import Sidebar from "@/components/Sidebar";
-import { AppProviders } from "./providers";
-import { GetSidebarState } from "@/components/Sidebar/actions";
-import PageWrapper, { MainWrapper } from "@/components/layout/Wrappers";
-import FooterApp from "@/components/layout/Footer";
-import NavBar from "@/components/NavBar";
 import { ThemeProvider } from "@/components/NextThemes/provider";
 
 // Fonts
@@ -34,9 +28,6 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
 
-    const sidebarCookie = await GetSidebarState();
-    const sidebarOpen = sidebarCookie && sidebarCookie.value === 'true' ? true : false;
-
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={cn(
@@ -49,18 +40,7 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <AppProviders sidebarOpen={sidebarOpen}>
-                        <div className="flex w-full relative bg-muted/40">
-                            <Sidebar />
-                            <MainWrapper>
-                                <NavBar />
-                                <PageWrapper>
-                                    {children}
-                                </PageWrapper>
-                                <FooterApp />
-                            </MainWrapper>
-                        </div>
-                    </AppProviders>
+                    {children}
                 </ThemeProvider>
             </body>
         </html>

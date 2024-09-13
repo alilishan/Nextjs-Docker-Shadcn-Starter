@@ -51,7 +51,7 @@ const Sidebar: FC<Props> = () => {
                 </div>
 
                 <div className="flex flex-col flex-1 p-3">
-                    <SidebarItem href="/app" icon={<PiMonitor size={'22px'} />} text="Dashboard" active={pathName === '/'} />
+                    <SidebarItem href="/app" icon={<PiMonitor size={'22px'} />} text="Dashboard" active={pathName === '/app'} />
                     <SidebarItem
                         href="/app/codes"
                         icon={<PiBarcode size={'22px'} />}
