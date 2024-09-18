@@ -102,7 +102,6 @@ body {
 
     min-height: 240px;
     border-radius: 12px;
-    padding: 24px;
     box-shadow: 0 1px 0 1px rgba(0, 0, 0, .02), 0 4px 6px rgba(0, 0, 0, .02), inset 0 0 0 6px var(--accents-1);
     // background: linear-gradient(180deg, #fff 0, var(--accents-1) 65.62%);
     position: relative;
@@ -119,6 +118,10 @@ body {
         mask-composite: exclude;
         pointer-events: none;
 
-    background: conic-gradient(from 0deg at 50% 50%, #ffbc31 -7.19deg, var(--accents-2) 14deg, var(--accents-2) 51deg, var(--accents-2) 311deg, #ffbc31 353deg, var(--accents-2) 374deg);
+        background: conic-gradient(from 0deg at 50% 50%, #ffbc31 -7.19deg, var(--accents-2) 14deg, var(--accents-2) 51deg, var(--accents-2) 311deg, #ffbc31 353deg, var(--accents-2) 374deg);
+    }
+
+    video {
+        border-radius: 8px;
     }
 }

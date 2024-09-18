@@ -3,12 +3,14 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { ImQuotesLeft } from "react-icons/im";
+import { PiTrendDownDuotone, PiUsersThreeDuotone, PiWarehouseDuotone } from "react-icons/pi";
 import Image from "next/image";
+import Link from "next/link";
 
 import { env } from "@/lib/env";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { PiTrendDownDuotone, PiUsersThreeDuotone, PiWarehouseDuotone } from "react-icons/pi";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default async function Home() {
     const { APP_NAME } = env;
@@ -72,10 +74,10 @@ export default async function Home() {
                     <div className="absolute flex items-start justify-end inset-0">
                         <img src="/images/web-bg.svg" className="w-auto h-2/3 rotate-180 object-cover" alt="Automated Warehouse" />
                     </div>
-                    <div className="container relative z-10">
+                    <div className="container relative z-10 max-w-6xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                             <div className="flex items-center justify-center">
-                                <div className="w-[400px] h-[400px] foundation_card overflow-hidden">
+                                <div className="w-[400px] h-[400px] foundation_card overflow-hidden p-4">
                                     <video
                                         className="w-full h-full object-cover"
                                         autoPlay
@@ -83,7 +85,7 @@ export default async function Home() {
                                         muted
                                         playsInline
                                     >
-                                        <source src="/videos/3.mp4" type="video/mp4" />
+                                        <source src="/videos/about.mp4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>
@@ -130,14 +132,14 @@ export default async function Home() {
                     </div>
                 </section>
 
-                <section className="py-20 relative">
+                <section className="py-20 relative overflow-hidden">
                     <div className="absolute flex items-end justify-start inset-0">
                         <img src="/images/web-bg.svg" className="w-auto h-2/3 object-cover" alt="Automated Warehouse" />
                     </div>
-                    <div className="container relative z-10">
+                    <div className="container relative z-10 max-w-6xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                             <div className="flex flex-col gap-6 items-start justify-center py-20">
-                                <h2 className="text-4xl font-medium text-dark">How <span className="text-orange-500">Storio</span> Operates</h2>
+                                <h2 className="text-4xl font-medium text-dark">How <span className="text-orange-500">Storio</span> Works</h2>
                                 <p className="text-dark text-lg">Storio uses machine learning algorithms to monitor and track goods movement. This data is then used to optimize the placement and movement of goods within the warehouse. A fleet of autonomous robots are designed to work seamlessly to deliver maximum efficiency and accuracy.</p>
                                 <p className="text-dark text-lg">Storio allows you to rent the pallets you actually need rather than a fixed floor area.</p>
                                 <Button className="bg-orange-100 text-orange-500 uppercase font-semibold px-10 py-6 rounded-lg shadow-none">
@@ -146,7 +148,7 @@ export default async function Home() {
                                 </Button>
                             </div>
                             <div className="flex items-center justify-center">
-                                <div className="w-[400px] h-[400px] foundation_card overflow-hidden">
+                                {/* <div className="w-[400px] h-[400px] foundation_card overflow-hidden">
                                     <video
                                         className="w-full h-full object-cover"
                                         autoPlay
@@ -157,16 +159,58 @@ export default async function Home() {
                                         <source src="/videos/3.mp4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
-                                </div>
-                                {/* <Image
-                                    src="/images/about.png"
+                                </div> */}
+                                <Image
+                                    src="/images/how-works.svg"
                                     alt="Automated Warehouse"
                                     width={500}
                                     height={300}
-                                    className="rounded-lg shadow-lg" /> */}
+                                    className="w-full h-auto" />
                             </div>
                         </div>
                    </div>
+
+
+                    <div className="mt-16 mb-12 border-b border-slate-100 xl:mb-0 demo-sm:block dark:border-slate-800">
+                        <div className="mb-[-3px] flex max-w-7xl mx-auto px-6 sm:px-8 md:px-10">
+                            <div className="flex items-start flex-none ml-[40rem] w-32">
+                                <div className="flex flex-col items-center ml-[-2px]">
+                                    <div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div>
+                                    <div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div>
+                                </div>
+                                <div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">AGV</div>
+                            </div>
+                            <div className="flex items-start flex-none w-64">
+                                <div className="flex flex-col items-center ml-[-2px]">
+                                    <div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div>
+                                    <div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div>
+                                </div>
+                                <div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">ASRS</div>
+                            </div>
+                            <div className="flex items-start flex-none w-64">
+                                <div className="flex flex-col items-center ml-[-2px]">
+                                    <div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div>
+                                    <div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div>
+                                </div>
+                                <div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">Smart</div>
+                            </div>
+                            <div className="flex items-start flex-none w-64">
+                                <div className="flex flex-col items-center ml-[-2px]">
+                                    <div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div>
+                                    <div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div>
+                                </div>
+                                <div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">Automated</div>
+                            </div>
+                            <div className="flex items-start flex-none">
+                                <div className="flex flex-col items-center ml-[-2px]">
+                                    <div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div>
+                                    <div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div>
+                                </div>
+                                <div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">Savings</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
 
                 <section className="py-20 relative">
@@ -174,9 +218,9 @@ export default async function Home() {
                         <img src="/images/imageAA.webp" className="w-full h-full object-cover" alt="Automated Warehouse" />
                     </div>
                     <div className="container relative z-10 min-h-[600px] flex items-end justify-start">
-                        <div className="max-w-3xl flex flex-col gap-6 items-start justify-start">
-                            <h2 className="text-4xl font-medium text-white">Grow and scale your business confidently.</h2>
-                            <p className="text-white text-lg">We understand your concerns on the resources needed and the uncertainty of the future. Let us work with you so that you can confidently grow your business, enjoy better margins and cashflow and give your company a competitive advantage over your competitors.</p>
+                        <div className="max-w-2xl flex flex-col gap-6 items-start justify-start">
+                            <h2 className="text-4xl font-bold text-white text-shadow-lg shadow-orange-800">Grow and scale your business confidently.</h2>
+                            <p className="text-white font-semibold text-lg text-shadow-lg shadow-orange-800">We understand your concerns on the resources needed and the uncertainty of the future. Let us work with you so that you can confidently grow your business, enjoy better margins and cashflow and give your company a competitive advantage over your competitors.</p>
                         </div>
                     </div>
                 </section>
@@ -209,7 +253,7 @@ export default async function Home() {
                                     description: "Storio uses advanced algorithms to optimize the placement and movement of goods within the warehouse, which reduces the need for manual labor."
                                 }
                             ].map((item, index) => (
-                                <div key={index} className="flex flex-col gap-4 items-stretch justify-start foundation_card w-full bg-white">
+                                <div key={index} className="flex flex-col gap-4 items-stretch justify-start foundation_card w-full p-8 bg-white">
                                     <div className="w-[48px] h-[48px] bg-orange-100 rounded-full flex items-center justify-center mb-10">
                                         {item.icon}
                                     </div>
@@ -221,13 +265,70 @@ export default async function Home() {
                         </div>
                     </div>
 
-                    <div className="mt-16 mb-12 border-b border-slate-100 xl:mb-0 demo-sm:block dark:border-slate-800"><div className="mb-[-3px] flex max-w-7xl mx-auto px-6 sm:px-8 md:px-10"><div className="flex items-start flex-none ml-[40rem] w-32"><div className="flex flex-col items-center ml-[-2px]"><div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div><div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div></div><div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">sm</div></div><div className="flex items-start flex-none w-64"><div className="flex flex-col items-center ml-[-2px]"><div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div><div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div></div><div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">md</div></div><div className="flex items-start flex-none w-64"><div className="flex flex-col items-center ml-[-2px]"><div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div><div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div></div><div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">lg</div></div><div className="flex items-start flex-none w-64"><div className="flex flex-col items-center ml-[-2px]"><div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div><div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div></div><div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">xl</div></div><div className="flex items-start flex-none"><div className="flex flex-col items-center ml-[-2px]"><div className="w-px h-14 bg-slate-100 dark:bg-slate-800"></div><div className="mt-[3px] w-[5px] h-[5px] shadow-sm rounded-full ring-1 bg-white ring-slate-500/[0.15] dark:bg-slate-900 dark:ring-slate-700"></div></div><div className="ml-1.5 rounded font-mono text-[0.625rem] leading-6 px-1.5 ring-1 ring-inset dark:ring-0 bg-slate-100 ring-slate-100 dark:bg-slate-800 dark:highlight-white/5">2xl</div></div></div></div>
+
+                </section>
+
+
+                <section className="py-20 relative">
+                    <div className="absolute flex items-end justify-start inset-0">
+                        <img src="/images/web-bg.svg" className="w-auto h-2/3 object-cover" alt="Automated Warehouse" />
+                    </div>
+                    <div className="container relative z-10 max-w-6xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                            <div className="flex flex-col gap-6 items-start justify-center mx-auto">
+                                <h2 className="text-4xl font-medium text-dark">What <span className="text-orange-500">Storio</span> Can Do For You</h2>
+                                <p className="text-dark text-lg">Find the answers to your questions we get asked the most.</p>
+                                <Button className="bg-orange-100 text-orange-500 uppercase font-semibold px-10 py-6 rounded-lg shadow-none">
+                                    More Solutions
+                                    <ArrowRight className="ml-2 animate-bounce-right" size={24} />
+                                </Button>
+                            </div>
+
+                            <div className="flex flex-col gap-6 items-start justify-start">
+                                <Card className="border-none bg-slate-50/50 shadow-2xl">
+                                    <CardContent className="pt-6">
+                                        <Accordion type="single" collapsible className="w-full">
+                                            {[
+                                                {
+                                                    question: "How does Storio's automated warehousing work?",
+                                                    answer: "Storio uses a combination of AI algorithms and robotic systems to automate warehouse operations. Our technology optimizes inventory placement, order picking, and overall warehouse management, resulting in increased efficiency and reduced costs."
+                                                },
+                                                {
+                                                    question: "What are the benefits of using Storio's services?",
+                                                    answer: "The main benefits include reduced operational costs, increased efficiency, improved accuracy in order fulfillment, scalability to meet changing demands, and the elimination of large upfront capital expenditures typically associated with warehouse automation."
+                                                },
+                                                {
+                                                    question: "Is Storio suitable for businesses of all sizes?",
+                                                    answer: "Yes, Storio's solutions are scalable and can be tailored to businesses of all sizes, from small e-commerce operations to large-scale distribution centers. Our flexible approach allows us to meet the unique needs of each client."
+                                                },
+                                                {
+                                                    question: "How does Storio ensure the security of stored goods?",
+                                                    answer: "We implement robust security measures including 24/7 surveillance, restricted access controls, and advanced inventory tracking systems. Our automated systems also minimize human error and potential security risks associated with manual handling."
+                                                },
+                                                {
+                                                    question: "Can Storio integrate with existing inventory management systems?",
+                                                    answer: "Absolutely. Storio's systems are designed to integrate seamlessly with a wide range of existing inventory management and ERP systems. We work closely with clients to ensure smooth integration and data flow between our automated warehouse solutions and their current systems."
+                                                }
+                                            ].map((faq, index) => (
+                                                <AccordionItem key={index} value={`item-${index + 1}`}>
+                                                    <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                                                    <AccordionContent className="text-left">
+                                                        {faq.answer}
+                                                    </AccordionContent>
+                                                </AccordionItem>
+                                            ))}
+                                        </Accordion>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
             </main>
 
 
-            <footer className="bg-slate-900 text-white py-10">
+            <footer className="bg-slate-900 text-white py-10 mt-20">
                 <div className="container flex flex-col gap-10 pt-10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="flex gap-4">
