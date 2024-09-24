@@ -73,10 +73,15 @@ const StatesPicker: React.FC<StatesPickerProps> = ({ selectedCountry, onChange, 
 
     }, [selectedCountry]);
 
+
     const handleChange = (selectedValue: string) => {
         setSelectedState(selectedValue);
         onChange(selectedValue);
     };
+
+    useEffect(() => {
+        setSelectedState(value || '');
+    }, [value]);
 
 
     return (

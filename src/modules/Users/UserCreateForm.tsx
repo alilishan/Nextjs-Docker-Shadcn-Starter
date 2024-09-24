@@ -25,6 +25,10 @@ const UserCreateForm: React.FC = () => {
 
 	const { watch, control, handleSubmit, formState: { errors } } = useForm<FormData>({
 		resolver: zodResolver(userCreateSchema),
+        defaultValues: {
+            country: 'MY',
+            state: 'MY-03',
+        }
 	});
 
 	const onSubmit = (data: FormData) => {
@@ -201,7 +205,7 @@ const UserCreateForm: React.FC = () => {
                                 required
                                 isError={!!errors.country}
                                 errorMessage={errors.country?.message}
-                                value=""
+                                value={field.value}
                                 onChange={(value: string) => {
                                     console.log(value);
                                     field.onChange(value);
@@ -218,6 +222,7 @@ const UserCreateForm: React.FC = () => {
                         render={({ field }) => (
                             <StatesPicker
                                 label="State"
+                                value={field.value}
                                 required
                                 isError={!!errors.state}
                                 errorMessage={errors.state?.message}
