@@ -11,9 +11,11 @@ import InputBox from '@/components/InputBox';
 import SelectBox from "@/components/SelectBox";
 import FormSheet from '@/components/FormSheet';
 import DropZoneSingle from '@/components/DropZone/DropZoneSingle';
+import CountriesPicker from '@/components/CountriesPicker';
 
 
 import { genderOptions, hairColorOptions, userCreateSchema, FormData } from './schema';
+import StatesPicker from '@/components/CountriesPicker/StatesPicker';
 
 
 
@@ -187,6 +189,50 @@ const UserCreateForm: React.FC = () => {
                     />
                 </div>
             </div>
+
+            <div className='flex w-full items-start justify-between gap-2'>
+                <div className='w-1/2'>
+                    <Controller
+                        name="country"
+                        control={control}
+                        render={({ field }) => (
+                            <CountriesPicker
+                                label="Country"
+                                required
+                                isError={!!errors.country}
+                                errorMessage={errors.country?.message}
+                                value=""
+                                onChange={(value: string) => {
+                                    console.log(value);
+                                    field.onChange(value);
+                                }}
+                                variant="ghost"
+                            />
+                        )}
+                    />
+                </div>
+                <div className='w-1/2'>
+                    <Controller
+                        name="state"
+                        control={control}
+                        render={({ field }) => (
+                            <StatesPicker
+                                label="State"
+                                required
+                                isError={!!errors.state}
+                                errorMessage={errors.state?.message}
+                                selectedCountry={watch('country')}
+                                onChange={(value: string) => {
+                                    console.log(value);
+                                    field.onChange(value);
+                                }}
+                                variant="ghost"
+                            />
+                        )}
+                    />
+                </div>
+            </div>
+
 
 			<div className="mt-4">
 				<Label>Form State:</Label>
