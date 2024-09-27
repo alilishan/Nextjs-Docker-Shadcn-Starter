@@ -36,48 +36,27 @@ const events: Event[] = [
         "title": "Sample Event",
         "start": new Date("2024-09-26T06:27:08.574Z"),
         "end": new Date("2024-09-26T07:27:08.574Z"),
-        "classNames": "bg-blue-200"
+        "classNames": "bg-orange-100 text-orange-700 dark:bg-orange-800 dark:text-orange-50" // This can be mapped to a color for maybe like category with dark set as well
     },
     {
         "id": 2,
         "title": "Sample Event 2",
         "start": new Date("2024-09-27T06:27:08.574Z"),
         "end": new Date("2024-09-27T07:27:08.574Z"),
-        "classNames": "bg-blue-200"
+        "classNames": "bg-blue-50 text-blue-800 dark:bg-blue-800 dark:text-blue-50"
     },
     {
         "id": 4,
         "title": "Sample Event 4",
-        "start": new Date("2024-09-27T06:27:08.574Z"),
-        "end": new Date("2024-09-27T07:27:08.574Z"),
-        "classNames": "bg-orange-200"
+        "start": new Date("2024-09-23T06:27:08.574Z"),
+        "end": new Date("2024-09-24T07:27:08.574Z"),
+        "classNames": "bg-pink-100 text-pink-800 dark:bg-pink-800 dark:text-pink-50"
     },
-    // {
-    //     "id": 5,
-    //     "title": "Sample Event 5",
-    //     "start": new Date("2024-09-27T06:27:08.574Z"),
-    //     "end": new Date("2024-09-27T07:27:08.574Z"),
-    //     "classNames": "bg-red-200"
-    // },
-    // {
-    //     "id": 6,
-    //     "title": "Sample Event 6",
-    //     "start": new Date("2024-09-27T06:27:08.574Z"),
-    //     "end": new Date("2024-09-27T07:27:08.574Z"),
-    //     "classNames": "bg-green-200"
-    // },
-    // {
-    //     "id": 7,
-    //     "title": "Sample Event 7",
-    //     "start": new Date("2024-09-27T06:27:08.574Z"),
-    //     "end": new Date("2024-09-27T07:27:08.574Z"),
-    //     "classNames": "bg-purple-200"
-    // },
     {
         "id": 3,
         "title": "Sample Event 3",
         "start": new Date("2024-09-01T06:27:08.574Z"),
         "end": new Date("2024-09-04T07:27:08.574Z"),
-        "classNames": "bg-blue-200"
+        "classNames": "bg-purple-50 text-purple-800 dark:bg-purple-800 dark:text-purple-50"
     }
 ]

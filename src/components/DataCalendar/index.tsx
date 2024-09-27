@@ -36,7 +36,7 @@ interface DataCalendarProps {
 // Cell Classes
 const cellClasses = "rounded bg-white p-2 cursor-pointer dark:bg-slate-800";
 const eventClasses = "text-sm p-1 my-1 rounded cursor-pointer dark:text-slate-800 hover:opacity-80";
-const buttonClasses = "bg-slate-100 dark:bg-slate-800 text-secondary hover:text-slate-900 dark:hover:text-slate-50";
+const buttonClasses = "bg-slate-100 dark:bg-slate-800 text-secondary hover:text-slate-900 dark:hover:text-slate-50 px-2 rounded-md";
 
 
 // DataCalendar component
