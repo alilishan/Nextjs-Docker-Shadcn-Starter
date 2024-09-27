@@ -9,12 +9,7 @@ import { CalendarClock, CalendarIcon, ChevronLeft, ChevronRight, Columns2, Grid3
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import TooltipItem from "@/components/TooltipItem";
 
 
 import ExpandButton from './ExpandButton';
@@ -39,6 +34,7 @@ interface DataCalendarProps {
 // Cell Classes
 const cellClasses = "rounded bg-white p-2 cursor-pointer dark:bg-slate-800";
 const eventClasses = "text-sm p-1 my-1 rounded cursor-pointer dark:text-slate-800 hover:opacity-80";
+const buttonClasses = "bg-slate-100 dark:bg-slate-800 text-secondary hover:text-slate-900 dark:hover:text-slate-50";
 
 
 // DataCalendar component
@@ -85,20 +81,20 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
         const maxColumns = eventColumns.length;
 
         return (
-            <div className="grid grid-cols-1 gap-1 relative" style={{ height: `${24 * 60}px` }}>
-                {hours.map(hour => (
+            <div className="grid grid-cols-1 gap-1 relative" style={{ height: `${24 * 62}px` }}>
+                {hours.map((hour, index) => (
                     <div
-                        key={hour}
+                        key={`${hour}-${index}`}
                         className={`${cellClasses} absolute w-full`}
-                        style={{ top: `${hour * 60}px`, height: '60px' }}
+                        style={{ top: `${hour * 62}px`, height: '60px' }}
                     >
                         <div className="font-semibold absolute top-0 left-0 w-12 text-right p-2">{`${hour}:00`}</div>
                     </div>
                 ))}
                 {eventColumns.map((column, columnIndex) =>
                     column.map(event => {
-                        const startMinutes = event.start.getHours() * 60 + event.start.getMinutes();
-                        const endMinutes = event.end.getHours() * 60 + event.end.getMinutes();
+                        const startMinutes = event.start.getHours() * 62 + event.start.getMinutes();
+                        const endMinutes = event.end.getHours() * 62 + event.end.getMinutes();
                         const durationMinutes = endMinutes - startMinutes;
 
                         return (
@@ -175,8 +171,8 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                             <div>{day.getDate()}</div>
                         </div>
                     ))}
-                    {hours.map(hour => (
-                        <React.Fragment key={hour}>
+                    {hours.map((hour, index) => (
+                        <React.Fragment key={`${hour}-${index}`}>
                             <div className={cellClasses + " text-right"}>{`${hour}:00`}</div>
                             {days.map((day, dayIndex) => {
                                 const cellDate = new Date(day);
@@ -384,8 +380,8 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                         <div key={month.toISOString()} className={cellClasses}>
                             <div className="font-medium pb-2 text-center">{month.toLocaleString('default', { month: 'long' })}</div>
                             <div className="grid grid-cols-7 gap-1 text-xs">
-                                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
-                                    <div key={day} className="text-center font-semibold">{day}</div>
+                                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                                    <div key={`${day}-${index}`} className="text-center font-semibold">{day}</div>
                                 ))}
                                 {days}
                             </div>
@@ -445,23 +441,26 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
 
     // Formatted Date
     const formattedDate = useMemo(() => {
-        if(view === 'year') {
-            return currentDate.toLocaleString('default', {
-                year: 'numeric',
-            });
-        }
-        if(view === 'month') {
-            return currentDate.toLocaleString('default', {
-                month: 'long',
-                year: 'numeric',
-            });
-        }
-        return currentDate.toLocaleString('default', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-            ...(view === 'week' && { weekday: 'long' })
-        });
+        // if(view === 'year') {
+        //     return currentDate.toLocaleString('default', {
+        //         year: 'numeric',
+        //     });
+        // }
+        // if(view === 'month') {
+        //     return currentDate.toLocaleString('default', {
+        //         month: 'long',
+        //         year: 'numeric',
+        //     });
+        // }
+        // return currentDate.toLocaleString('default', {
+        //     day: 'numeric',
+        //     month: 'long',
+        //     year: 'numeric',
+        //     ...(view === 'week' && { weekday: 'long' })
+        // });
+        if(view === 'year') return format(currentDate, "yyyy");
+        if(view === 'month') return format(currentDate, "MMMM yyyy");
+        return format(currentDate, "PPP");
     }, [currentDate, view]);
 
 
@@ -485,18 +484,20 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
             <div className="grid grid-cols-3 mb-4">
 
                 <div className="flex items-center gap-1 ">
-                    <Button onClick={() => changeDate(-1)} size={"icon"} variant={"ghost"}><ChevronLeft size={18} /></Button>
+                    <Button onClick={() => changeDate(-1)} size={"icon"} variant={"ghost"} className={ buttonClasses }><ChevronLeft size={18} /></Button>
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button
-                                variant={"outline"}
+                                variant={"ghost"}
                                 className={cn(
-                                    "w-[240px] justify-start text-left font-normal",
+                                    buttonClasses,
+                                    "w-[240px] justify-start text-left font-normal text-slate-900 dark:text-slate-50",
                                     !currentDate && "text-muted-foreground"
                                 )}
                             >
                                 <CalendarIcon className="mr-2 h-4 w-4" />
-                                {currentDate ? format(currentDate, "PPP") : <span>Pick a date</span>}
+                                {/* {currentDate ? format(currentDate, "PPP") : <span>Pick a date</span>} */}
+                                {mounted && currentDate ? formattedDate : <span className="">Loading...</span>}
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
@@ -508,16 +509,16 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                             />
                         </PopoverContent>
                     </Popover>
-                    <Button onClick={() => changeDate(1)} size={"icon"} variant={"ghost"}><ChevronRight size={18} /></Button>
+                    <Button onClick={() => changeDate(1)} size={"icon"} variant={"ghost"} className={ buttonClasses }><ChevronRight size={18} /></Button>
 
                     <TooltipItem content={<span>Go to Today</span>}>
-                        <Button onClick={goToToday} size={"icon"} variant={"ghost"}><CalendarClock size={18} /></Button>
+                        <Button onClick={goToToday} size={"icon"} variant={"ghost"} className={ buttonClasses }><CalendarClock size={18} /></Button>
                     </TooltipItem>
                 </div>
 
 
                 <div className="flex items-center justify-center font-semibold">
-                    {mounted ? formattedDate : <span className="invisible">Loading...</span>}
+                    {/* {mounted ? formattedDate : <span className="invisible">Loading...</span>} */}
                 </div>
 
                 <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-md dark:bg-slate-800">
@@ -548,23 +549,3 @@ export default DataCalendar;
 
 
 
-export function TooltipItem({
- children,
- content,
-} : {
-    children: React.ReactNode,
-    content: React.ReactNode,
-}) {
-    return (
-        <TooltipProvider>
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    { children }
-                </TooltipTrigger>
-                <TooltipContent>
-                    { content }
-                </TooltipContent>
-            </Tooltip>
-        </TooltipProvider>
-    )
-}
