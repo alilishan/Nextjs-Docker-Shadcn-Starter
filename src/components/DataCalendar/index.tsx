@@ -3,12 +3,14 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarClock, CalendarIcon, ChevronLeft, ChevronRight, Columns2, Grid3x3, LayoutGrid, List } from "lucide-react";
+import { CalendarClock, CalendarIcon, ChevronLeft, ChevronRight, Columns2, Grid3x3, LayoutGrid, List, Logs } from "lucide-react";
+
 
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
 import TooltipItem from "@/components/TooltipItem";
 
 
@@ -39,9 +41,10 @@ const buttonClasses = "bg-slate-100 dark:bg-slate-800 text-secondary hover:text-
 
 // DataCalendar component
 const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellClick }) => {
-    const [view, setView] = useState<'day' | 'week' | 'month' | 'year'>('month');
+    const [view, setView] = useState<'day' | 'week' | 'month' | 'year' | 'events'>('month');
     const [currentDate, setCurrentDate] = useState(new Date());
     const [mounted, setMounted] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
 
     // Format event time
@@ -393,6 +396,53 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
     }, [currentDate, data, onCellClick]);
 
 
+    // Render Events View
+    const renderEventsView = useCallback(() => {
+        const filteredEvents = data
+            .filter(event => event.title.toLowerCase().includes(searchTerm.toLowerCase()))
+            .sort((a, b) => a.start.getTime() - b.start.getTime());
+
+        return (
+            <div className="space-y-4">
+                <Input
+                    type="text"
+                    placeholder="Search events..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={cn(
+                        "w-full",
+                        "bg-slate-100 dark:bg-slate-800",
+                        "text-slate-900 dark:text-slate-50",
+                        "border-none",
+                        "rounded-md",
+                        "p-2",
+                        "focus:outline-none focus:ring-2 focus:ring-slate-500 dark:focus:ring-slate-500",
+                        "transition-colors",
+                        "shadow-none"
+                    )}
+                />
+                <div className="space-y-2">
+                    {filteredEvents.map(event => (
+                        <div
+                            key={event.id}
+                            className={cn(
+                                cellClasses,
+                                "p-3 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors",
+                                event.classNames
+                            )}
+                            onClick={() => onEventClick && onEventClick(event)}
+                        >
+                            <div className="font-semibold">{event.title}</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                                {format(event.start, "PPP")} {formatEventTime(event.start)} - {formatEventTime(event.end)}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }, [data, searchTerm, onEventClick]);
+
     // Render View
     const renderView = useMemo(() => {
         switch (view) {
@@ -404,10 +454,12 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                 return renderMonthView();
             case 'year':
                 return renderYearView();
+            case 'events':
+                return renderEventsView();
             default:
                 return null;
         }
-    }, [view, renderDayView, renderWeekView, renderMonthView, renderYearView]);
+    }, [view, renderDayView, renderWeekView, renderMonthView, renderYearView, renderEventsView]);
 
 
     // Change Date
@@ -522,10 +574,11 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                 </div>
 
                 <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-md dark:bg-slate-800">
-                    <ExpandButton text="Day" isActive={view === 'day'} onClick={() => setView('day')} icon={<List size={18} />} />
+                    <ExpandButton text="Day" isActive={view === 'day'} onClick={() => setView('day')} icon={<Logs size={18} />} />
                     <ExpandButton text="Week" isActive={view === 'week'} onClick={() => setView('week')} icon={<Columns2 size={18} />} />
                     <ExpandButton text="Month" isActive={view === 'month'} onClick={() => setView('month')} icon={<Grid3x3 size={18} />} />
                     <ExpandButton text="Year" isActive={view === 'year'} onClick={() => setView('year')} icon={<LayoutGrid size={18} />} />
+                    <ExpandButton text="Events" isActive={view === 'events'} onClick={() => setView('events')} icon={<List size={18} />} />
                 </div>
 
             </div>
