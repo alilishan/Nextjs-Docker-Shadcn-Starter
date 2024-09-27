@@ -130,7 +130,7 @@ const DropZoneSingle: React.FC<DropZoneSingleProps> = ({
                             </div>
                         ) : (
                             <>
-                                <p className='pt-2 text-slate-600 dark:text-slate-400'>Drag 'n' drop a file here, or use the button below to select a file</p>
+                                <p className='pt-2 text-slate-600 dark:text-slate-400'>Drag & drop a file here, or use the button below to select a file</p>
                                 { uploadError && <p className='text-red-500'>{uploadError}</p> }
                             </>
                         )}

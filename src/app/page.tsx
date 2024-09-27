@@ -114,7 +114,7 @@ export default async function Home() {
                         <div className="flex flex-col items-start max-w-3xl mx-auto">
                             <ImQuotesLeft className="text-orange-500" size={48} />
                             <blockquote className="text-2xl italic text-gray-700">
-                                "Storio has revolutionized our warehouse operations. Their AI-driven approach and robotic automation have not only cut our costs significantly but also boosted our efficiency beyond what we thought possible. It's not just a service; it's a game-changer in logistics."
+                                &quot;Storio has revolutionized our warehouse operations. Their AI-driven approach and robotic automation have not only cut our costs significantly but also boosted our efficiency beyond what we thought possible. It&apos;s not just a service; it&apos;s a game-changer in logistics.&quot;
                             </blockquote>
                             <p className="mt-4 text-xs font-medium text-orange-500">John Doe, CEO of Customer Inc</p>
                         </div>
