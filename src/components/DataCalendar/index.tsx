@@ -62,39 +62,73 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
 
         const hours = Array.from({ length: 24 }, (_, i) => i);
 
+        // Sort events by start time
+        dayEvents.sort((a, b) => a.start.getTime() - b.start.getTime());
+
+        // Create an array to store event columns
+        const eventColumns: Event[][] = [];
+
+        // Populate the event columns
+        dayEvents.forEach(event => {
+            let column = 0;
+            while (eventColumns[column] && eventColumns[column].some(e =>
+                (event.start < e.end && event.end > e.start)
+            )) {
+                column++;
+            }
+            if (!eventColumns[column]) {
+                eventColumns[column] = [];
+            }
+            eventColumns[column].push(event);
+        });
+
+        const maxColumns = eventColumns.length;
+
         return (
-            <div className="grid grid-cols-1 gap-1">
-                {hours.map(hour => {
-                    const cellDate = new Date(currentDate);
-                    cellDate.setHours(hour, 0, 0, 0);
-                    return (
-                        <div
-                            key={hour}
-                            className={cellClasses}
-                            onClick={() => onCellClick && onCellClick(cellDate)}
-                        >
-                            <div className="font-bold">{`${hour}:00`}</div>
-                            {dayEvents.filter(event => event.start.getHours() === hour).map(event => (
-                                <div
-                                    key={event.id}
-                                    className={cn(
-                                        eventClasses,
-                                        event.classNames || "bg-blue-100"
-                                    )}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onEventClick && onEventClick(event);
-                                    }}
-                                >
-                                    <div className="font-semibold">{event.title}</div>
-                                    <div className="text-xs">
-                                        {formatEventTime(event.start)} - {formatEventTime(event.end)}
-                                    </div>
+            <div className="grid grid-cols-1 gap-1 relative" style={{ height: `${24 * 60}px` }}>
+                {hours.map(hour => (
+                    <div
+                        key={hour}
+                        className={`${cellClasses} absolute w-full`}
+                        style={{ top: `${hour * 60}px`, height: '60px' }}
+                    >
+                        <div className="font-semibold absolute top-0 left-0 w-12 text-right p-2">{`${hour}:00`}</div>
+                    </div>
+                ))}
+                {eventColumns.map((column, columnIndex) =>
+                    column.map(event => {
+                        const startMinutes = event.start.getHours() * 60 + event.start.getMinutes();
+                        const endMinutes = event.end.getHours() * 60 + event.end.getMinutes();
+                        const durationMinutes = endMinutes - startMinutes;
+
+                        return (
+                            <div
+                                key={event.id}
+                                className={cn(
+                                    eventClasses,
+                                    "absolute m-0 overflow-hidden",
+                                    event.classNames || "bg-blue-100"
+                                )}
+                                style={{
+                                    top: `${startMinutes}px`,
+                                    height: `${durationMinutes}px`,
+                                    left: `calc(${(columnIndex / maxColumns) * 100}% + 3.5rem)`,
+                                    width: `calc(${100 / maxColumns}% - 3.5rem/${maxColumns})`,
+                                    zIndex: columnIndex + 1
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onEventClick && onEventClick(event);
+                                }}
+                            >
+                                <div className="font-semibold">{event.title}</div>
+                                <div className="text-xs">
+                                    {formatEventTime(event.start)} - {formatEventTime(event.end)}
                                 </div>
-                            ))}
-                        </div>
-                    );
-                })}
+                            </div>
+                        );
+                    })
+                )}
             </div>
         );
     }, [currentDate, data, onEventClick, onCellClick]);
