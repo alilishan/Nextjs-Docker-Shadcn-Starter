@@ -1,3 +1,5 @@
+"use client"
+
 import DataCalendar, { Event } from "@/components/DataCalendar";
 import PageHeading from "@/components/Typography/PageHeading";
 
@@ -15,12 +17,12 @@ export default async function Calendar() {
             <div className="py-10">
                 <DataCalendar
                     data={ events }
-                    // onEventClick={ (event) => {
-                    //     console.log(event);
-                    // }}
-                    // onCellClick={ (date) => {
-                    //     console.log(date);
-                    // }}
+                    onEventClick={ (event) => {
+                        console.log(event);
+                    }}
+                    onCellClick={ (date) => {
+                        console.log(date);
+                    }}
                 />
             </div>
         </>

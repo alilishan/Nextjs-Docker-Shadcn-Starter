@@ -37,7 +37,8 @@ interface DataCalendarProps {
 }
 
 // Cell Classes
-const cellClasses = "rounded bg-white p-2 cursor-pointer dark:bg-slate-800"
+const cellClasses = "rounded bg-white p-2 cursor-pointer dark:bg-slate-800";
+const eventClasses = "text-sm p-1 my-1 rounded cursor-pointer dark:text-slate-800 hover:opacity-80";
 
 
 // DataCalendar component
@@ -77,7 +78,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                                 <div
                                     key={event.id}
                                     className={cn(
-                                        "text-sm p-1 my-1 rounded cursor-pointer dark:text-slate-800",
+                                        eventClasses,
                                         event.classNames || "bg-blue-100"
                                     )}
                                     onClick={(e) => {
@@ -113,9 +114,23 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
 
         const hours = Array.from({ length: 24 }, (_, i) => i);
 
+        // Create a 2D array to store events for each day and hour
+        const eventGrid = days.map(() => hours.map(() => [] as Array<{ event: Event, duration: number }>));
+
+        // Populate the event grid
+        data.forEach(event => {
+            const eventDay = days.findIndex(day => day.toDateString() === event.start.toDateString());
+            if (eventDay !== -1) {
+                const startHour = event.start.getHours();
+                const endHour = Math.min(event.end.getHours() + (event.end.getMinutes() > 0 ? 1 : 0), 24);
+                const duration = endHour - startHour;
+
+                eventGrid[eventDay][startHour].push({ event, duration });
+            }
+        });
+
         return (
             <div>
-
                 <div className="grid grid-cols-8 gap-1">
                     <div className={`${cellClasses} flex items-center justify-center`}>
                         <div className="font-semibold text-center">Week {weekNumber}</div>
@@ -129,25 +144,34 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                     {hours.map(hour => (
                         <React.Fragment key={hour}>
                             <div className={cellClasses + " text-right"}>{`${hour}:00`}</div>
-                            {days.map(day => {
+                            {days.map((day, dayIndex) => {
                                 const cellDate = new Date(day);
                                 cellDate.setHours(hour, 0, 0, 0);
+                                const eventsInCell = eventGrid[dayIndex][hour];
+
                                 return (
                                     <div
                                         key={`${day.toISOString()}-${hour}`}
-                                        className={cellClasses}
+                                        className={`${cellClasses} relative`}
                                         onClick={() => onCellClick && onCellClick(cellDate)}
                                     >
-                                        {data.filter(event =>
-                                            event.start.toDateString() === day.toDateString() &&
-                                            event.start.getHours() === hour
-                                        ).map(event => (
+                                        {eventsInCell.map(({ event, duration }, index) => (
                                             <div
                                                 key={event.id}
                                                 className={cn(
-                                                    "text-sm p-1 my-1 rounded cursor-pointer dark:text-slate-800",
+                                                    eventClasses,
+                                                    "absolute m-0",
                                                     event.classNames || "bg-blue-100"
                                                 )}
+                                                style={{
+                                                    top: 0,
+                                                    left: `${(index * 100) / eventsInCell.length}%`,
+                                                    width: `${100 / eventsInCell.length}%`,
+                                                    height: `${duration * 100}%`,
+                                                    minHeight: '20px',
+                                                    overflow: 'hidden',
+                                                    zIndex: index + 1
+                                                }}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     onEventClick && onEventClick(event);
@@ -222,7 +246,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
             days.push(
                 <div
                     key={i}
-                    className={cn( cellClasses, "h-32 ", isToday && "bg-blue-100")}
+                    className={cn(cellClasses, "h-32 ", isToday && "bg-blue-100")}
                     onClick={() => onCellClick && onCellClick(cellDate)}
                 >
                     <div className={isToday ? 'font-bold' : ''}>{i}</div>
@@ -230,7 +254,8 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                         <div
                             key={event.id}
                             className={cn(
-                                "text-xs p-1 my-1 rounded text-ellipsis whitespace-nowrap dark:text-slate-800",
+                                eventClasses,
+                                "text-xs font-medium",
                                 event.classNames || "bg-blue-200"
                             )}
                             style={{
@@ -248,7 +273,16 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                         </div>
                     ))}
                     {moreEventsCount > 0 && (
-                        <div className="text-xs text-gray-500">+{moreEventsCount} more</div>
+                        <div
+                            className="text-xs text-gray-500 cursor-pointer hover:text-gray-700"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentDate(cellDate);
+                                setView('day');
+                            }}
+                        >
+                            +{moreEventsCount} more
+                        </div>
                     )}
                 </div>
             );
@@ -262,7 +296,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                 {days}
             </div>
         );
-    }, [currentDate, data, onEventClick, onCellClick]);
+    }, [currentDate, data, onEventClick, onCellClick, setView]);
 
 
     // Render Year View
