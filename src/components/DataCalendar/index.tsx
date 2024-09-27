@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { CalendarClock, CalendarIcon, ChevronLeft, ChevronRight, Columns2, Grid3x3, LayoutGrid, List } from "lucide-react";
 
 
 import { cn } from "@/lib/utils";
@@ -15,6 +15,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+
+import ExpandButton from './ExpandButton';
+
 
 // Event interface
 export interface Event {
@@ -31,6 +35,10 @@ interface DataCalendarProps {
     onEventClick?: (event: Event) => void;
     onCellClick?: (date: Date) => void;
 }
+
+// Cell Classes
+const cellClasses = "rounded bg-white p-2 cursor-pointer dark:bg-slate-800"
+
 
 // DataCalendar component
 const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellClick }) => {
@@ -61,7 +69,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                     return (
                         <div
                             key={hour}
-                            className="rounded bg-white p-2 cursor-pointer"
+                            className={cellClasses}
                             onClick={() => onCellClick && onCellClick(cellDate)}
                         >
                             <div className="font-bold">{`${hour}:00`}</div>
@@ -69,7 +77,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                                 <div
                                     key={event.id}
                                     className={cn(
-                                        "text-sm p-1 my-1 rounded cursor-pointer",
+                                        "text-sm p-1 my-1 rounded cursor-pointer dark:text-slate-800",
                                         event.classNames || "bg-blue-100"
                                     )}
                                     onClick={(e) => {
@@ -109,25 +117,25 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
             <div>
 
                 <div className="grid grid-cols-8 gap-1">
-                    <div className="p-2 rounded bg-white flex items-center justify-center">
+                    <div className={`${cellClasses} flex items-center justify-center`}>
                         <div className="font-semibold text-center">Week {weekNumber}</div>
                     </div>
                     {days.map(day => (
-                        <div key={day.toISOString()} className="rounded bg-white p-2 text-center">
+                        <div key={day.toISOString()} className={cellClasses}>
                             <div className="font-bold">{day.toLocaleDateString('en-US', { weekday: 'short' })}</div>
                             <div>{day.getDate()}</div>
                         </div>
                     ))}
                     {hours.map(hour => (
                         <React.Fragment key={hour}>
-                            <div className="rounded bg-white p-2 text-right">{`${hour}:00`}</div>
+                            <div className={cellClasses + " text-right"}>{`${hour}:00`}</div>
                             {days.map(day => {
                                 const cellDate = new Date(day);
                                 cellDate.setHours(hour, 0, 0, 0);
                                 return (
                                     <div
                                         key={`${day.toISOString()}-${hour}`}
-                                        className="rounded bg-white p-2 cursor-pointer"
+                                        className={cellClasses}
                                         onClick={() => onCellClick && onCellClick(cellDate)}
                                     >
                                         {data.filter(event =>
@@ -137,7 +145,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                                             <div
                                                 key={event.id}
                                                 className={cn(
-                                                    "text-sm p-1 my-1 rounded cursor-pointer",
+                                                    "text-sm p-1 my-1 rounded cursor-pointer dark:text-slate-800",
                                                     event.classNames || "bg-blue-100"
                                                 )}
                                                 onClick={(e) => {
@@ -214,7 +222,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
             days.push(
                 <div
                     key={i}
-                    className={cn("p-2 h-32 cursor-pointer bg-white rounded", isToday && "bg-blue-100")}
+                    className={cn( cellClasses, "h-32 ", isToday && "bg-blue-100")}
                     onClick={() => onCellClick && onCellClick(cellDate)}
                 >
                     <div className={isToday ? 'font-bold' : ''}>{i}</div>
@@ -222,7 +230,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                         <div
                             key={event.id}
                             className={cn(
-                                "text-xs p-1 my-1 rounded text-ellipsis whitespace-nowrap",
+                                "text-xs p-1 my-1 rounded text-ellipsis whitespace-nowrap dark:text-slate-800",
                                 event.classNames || "bg-blue-200"
                             )}
                             style={{
@@ -293,7 +301,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                                 key={i}
                                 className={cn(
                                     "text-center cursor-pointer p-1 rounded",
-                                    isToday && "bg-blue-100 font-bold",
+                                    isToday && "bg-blue-100 font-bold dark:bg-blue-800",
                                     hasEvent && "font-semibold"
                                 )}
                                 onClick={() => onCellClick && onCellClick(cellDate)}
@@ -305,7 +313,7 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                     }
 
                     return (
-                        <div key={month.toISOString()} className="rounded bg-white p-2">
+                        <div key={month.toISOString()} className={cellClasses}>
                             <div className="font-medium pb-2 text-center">{month.toLocaleString('default', { month: 'long' })}</div>
                             <div className="grid grid-cols-7 gap-1 text-xs">
                                 {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
@@ -389,14 +397,6 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
     }, [currentDate, view]);
 
 
-    // Button Classes
-    const buttonClasses = (viewType: string) => {
-        return cn(
-            "rounded-md bg-transparent text-black shadow-none transition-all duration-300 hover:bg-white/80 hover:text-accent-foreground",
-            viewType === view && "border border-input bg-white",
-        );
-    };
-
 
     // Handle Date Select
     const handleDateSelect = (date: Date | undefined) => {
@@ -414,10 +414,10 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
 
     return (
         <div className="p-4">
-            <div className="flex items-center justify-between mb-4">
+            <div className="grid grid-cols-3 mb-4">
 
-                <div className="flex items-center gap-2">
-                    <Button onClick={() => changeDate(-1)} size={"icon"} variant={"ghost"}><ChevronLeft /></Button>
+                <div className="flex items-center gap-1 ">
+                    <Button onClick={() => changeDate(-1)} size={"icon"} variant={"ghost"}><ChevronLeft size={18} /></Button>
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button
@@ -440,23 +440,25 @@ const DataCalendar: React.FC<DataCalendarProps> = ({ data, onEventClick, onCellC
                             />
                         </PopoverContent>
                     </Popover>
-                    <Button onClick={() => changeDate(1)} size={"icon"} variant={"ghost"}><ChevronRight /></Button>
+                    <Button onClick={() => changeDate(1)} size={"icon"} variant={"ghost"}><ChevronRight size={18} /></Button>
 
                     <TooltipItem content={<span>Go to Today</span>}>
-                        <Button onClick={goToToday} size={"icon"} variant={"ghost"}><CalendarIcon /></Button>
+                        <Button onClick={goToToday} size={"icon"} variant={"ghost"}><CalendarClock size={18} /></Button>
                     </TooltipItem>
                 </div>
 
 
-                <div className="text-lg font-semibold">
+                <div className="flex items-center justify-center font-semibold">
                     {mounted ? formattedDate : <span className="invisible">Loading...</span>}
                 </div>
-                <div className="flex items-center gap-1 p-2 bg-slate-100 rounded-md">
-                    <Button onClick={() => setView('day')} className={buttonClasses('day')}>Day</Button>
-                    <Button onClick={() => setView('week')} className={buttonClasses('week')}>Week</Button>
-                    <Button onClick={() => setView('month')} className={buttonClasses('month')}>Month</Button>
-                    <Button onClick={() => setView('year')} className={buttonClasses('year')}>Year</Button>
+
+                <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-md dark:bg-slate-800">
+                    <ExpandButton text="Day" isActive={view === 'day'} onClick={() => setView('day')} icon={<List size={18} />} />
+                    <ExpandButton text="Week" isActive={view === 'week'} onClick={() => setView('week')} icon={<Columns2 size={18} />} />
+                    <ExpandButton text="Month" isActive={view === 'month'} onClick={() => setView('month')} icon={<Grid3x3 size={18} />} />
+                    <ExpandButton text="Year" isActive={view === 'year'} onClick={() => setView('year')} icon={<LayoutGrid size={18} />} />
                 </div>
+
             </div>
             {renderView}
         </div>
