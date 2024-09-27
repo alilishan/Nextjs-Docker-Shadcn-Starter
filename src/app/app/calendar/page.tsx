@@ -2,15 +2,34 @@
 
 import DataCalendar, { Event } from "@/components/DataCalendar";
 import PageHeading from "@/components/Typography/PageHeading";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 
 export default function Calendar() {
+
+    const [events, setEvents] = useState<Event[]>(eventsData);
+
+    // DONT USE CLIENT SIDE RENDERING FOR THIS COMPONENT
+    // USE SERVER SIDE RENDERING
+    // THIS IS JUST A SAMPLE
 
     return (
         <>
             <PageHeading
                 headingText="Calendar"
             >
+                <Button
+                    onClick={ () => {
+                        setEvents([...events, {
+                            "id": 5,
+                            "title": "Sample Event 5",
+                            "start": new Date (new Date(new Date().setDate(new Date().getDate() + 1)).setHours(12, 0, 0, 0)),
+                            "end": new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(13, 0, 0, 0)),
+                            "classNames": "bg-red-200 text-red-800 dark:bg-red-800 dark:text-red-50"
+                        }]);
+                    }}
+                >Add Event</Button>
             </PageHeading>
 
 
@@ -30,7 +49,7 @@ export default function Calendar() {
 }
 
 
-const events: Event[] = [
+const eventsData: Event[] = [
     {
         "id": 1,
         "title": "Sample Event",
