@@ -125,3 +125,8 @@ body {
         border-radius: 8px;
     }
 }
+
+
+.card-table {
+    @apply [&>*>tr>td:first-child]:ps-4 [&>*>tr>th:first-child]:ps-4 [&>thead]:bg-slate-50 [&>thead]:text-xs [&>thead>tr>th]:font-semibold [&>thead>tr>th]:uppercase;
+}

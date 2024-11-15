@@ -16,10 +16,10 @@ interface SnippetProps {
 const Snippet: React.FC<SnippetProps> = ({ children, variant = 'default', size = 'medium', className }) => {
     const [copied, setCopied] = useState(false);
 
-    const baseStyles = 'bg-gray-100 font-mono rounded-md relative flex items-center';
+    const baseStyles = 'bg-slate-100 font-mono rounded-md relative inline-flex items-center gap-3';
 
     const variantStyles: Record<SnippetVariant, string> = {
-        default: 'text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-300',
+        default: 'text-gray-700 bg-slate-100 dark:bg-gray-700 dark:text-gray-300',
         primary: 'bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300',
         success: 'text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-300',
         danger: 'text-pink-700 bg-pink-100 dark:bg-pink-900 dark:text-pink-300',
@@ -57,7 +57,7 @@ const Snippet: React.FC<SnippetProps> = ({ children, variant = 'default', size =
             <button
                 onClick={handleCopy}
                 className={cn(
-                    "absolute p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors",
+                    "ms-auto p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors",
                     buttonPositions[size]
                 )}
             >

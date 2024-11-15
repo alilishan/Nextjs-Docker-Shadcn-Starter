@@ -4,7 +4,7 @@ import React, { FC, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { PiMonitor, PiBarcode, PiAddressBook, PiFolder, PiGear, PiUser, PiLock, PiCableCar, PiCalendarBlankDuotone } from "react-icons/pi";
+import { PiMonitor, PiBarcode, PiAddressBook, PiFolder, PiGear, PiUser, PiLock, PiCableCar, PiCalendarBlankDuotone, PiTruckTrailer, PiTruck } from "react-icons/pi";
 
 import { Separator } from "@/components/ui/separator";
 import MarcLogo from "@/assets/marc-logo-corp.jpg";
@@ -53,6 +53,7 @@ const Sidebar: FC<Props> = () => {
                 <div className="flex flex-col flex-1 p-3">
                     <SidebarItem href="/app" icon={<PiMonitor size={'22px'} />} text="Dashboard" active={pathName === '/app'} />
                     <SidebarItem href="/app/calendar" icon={<PiCalendarBlankDuotone size={'22px'} />} text="Calendar" active={pathName === '/app/calendar'} />
+                    <SidebarItem href="/app/suppliers" icon={<PiTruck size={'22px'} />} text="Suppliers" active={pathName === '/app/suppliers'} />
                     <SidebarItem
                         href="/app/codes"
                         icon={<PiBarcode size={'22px'} />}
