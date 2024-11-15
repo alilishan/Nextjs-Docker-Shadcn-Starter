@@ -23,7 +23,7 @@ export default async function PurchaseOrders() {
             <DashCard
                 title="Purchase Orders"
                 description="Purchase orders from ACME Supplies"
-                className="mt-6"
+                className=""
                 actions={
                     <Button variant="default" size="sm">
                         Create Purchase Order
