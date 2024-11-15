@@ -130,3 +130,16 @@ body {
 .card-table {
     @apply [&>*>tr>td:first-child]:ps-4 [&>*>tr>th:first-child]:ps-4 [&>thead]:bg-slate-50 [&>thead]:text-xs [&>thead>tr>th]:font-semibold [&>thead>tr>th]:uppercase;
 }
+
+
+.data-table {
+    @apply bg-white p-4 rounded-lg dark:bg-slate-900;
+
+    table {
+        thead {
+            @apply [&_tr]:border-0;
+            @apply [&_th]:text-slate-700 [&_th]:uppercase [&_th]:text-xs [&_th]:font-bold [&_th]:bg-muted;
+            @apply [&_tr>th:first-child]:rounded-l-lg [&_tr>th:last-child]:rounded-r-lg;
+        }
+    }
+}

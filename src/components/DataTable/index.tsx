@@ -80,20 +80,20 @@ export function DataTable<TData, TValue>({
     return (
         <div>
 
-            <div className="bg-white p-4 rounded-lg dark:bg-slate-900">
+            <div className="data-table">
                 <Table>
-                    <TableHeader className="[&_tr]:border-0">
+                    <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id} className="">
+                        <TableRow key={headerGroup.id}>
                             {headerGroup.headers.map((header, index) => {
                                 return (
                                 <TableHead
                                     key={header.id}
-                                    className={cn(
-                                        'text-slate-4700 uppercase text-xs font-bold bg-muted',
-                                        index === 0 && 'rounded-l-lg',
-                                        index === headerGroup.headers.length - 1 && 'rounded-r-lg'
-                                    )}
+                                    // className={cn(
+                                    //     'text-slate-4700 uppercase text-xs font-bold bg-muted',
+                                    //     index === 0 && 'rounded-l-lg',
+                                    //     index === headerGroup.headers.length - 1 && 'rounded-r-lg'
+                                    // )}
                                 >
                                     {header.isPlaceholder
                                     ? null

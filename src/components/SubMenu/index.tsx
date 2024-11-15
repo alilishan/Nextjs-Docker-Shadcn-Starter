@@ -10,6 +10,8 @@ interface Props {
         title: string;
         href: string;
         icon: React.ReactNode;
+        badge?: string;
+        badgeColor?: string;
     }[];
     className?: string;
 }
@@ -31,6 +33,7 @@ const SubMenu:FC<Props> = ({
                     >
                         {link.icon}
                         {link.title}
+                        {link.badge && <span className={cn("text-xs font-medium rounded-full px-2 py-1 ms-auto", link.badgeColor)}>{link.badge}</span>}
                     </Link>
                 ))
             }
